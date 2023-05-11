@@ -1,0 +1,28 @@
+project:
+  type: book
+  output-dir: docs
+
+book:
+  title: "Statistics"
+  favicon: favicon.ico
+  author: "Aj!"
+  date: "5/8/2023"
+  chapters:
+    - index.qmd
+    - univariate.qmd
+    - bivariate.qmd
+
+
+bibliography: references.bib
+
+format:
+  html:
+    theme:
+      light: flatly
+      dark: darkly
+
+  pdf:
+    documentclass: scrreprt
+
+
+

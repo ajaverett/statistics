@@ -1,0 +1,834 @@
+---
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+# Bivariate Data
+
+Bivariate data, a fundamental concept in the world of statistics, refers to a analyzing data with two variables, each representing a distinct dimension of the information being analyzed. When one variable is dependent on another variable for each point, we can construct models to show how the model explains the other.
+
+## The Data
+
+The 'mtcars' dataset is a classic dataset that has been widely used in the field of statistics and data analysis. It comprises data on 32 different car models from the 1970s, offering a comprehensive snapshot of various automobile attributes from that era. In this textbook, we will focus on two key variables from the 'mtcars' dataset: 'mpg' (miles per gallon) and 'weight' (the weight of the car in pounds).
+
+'Mpg' represents the fuel efficiency of a car, with higher values indicating better efficiency. It is an important metric for consumers and manufacturers alike, as it provides information about the overall performance and cost-effectiveness of a vehicle. On the other hand, 'weight' is a critical characteristic that impacts numerous aspects of a car's performance, including acceleration, handling, and fuel consumption. By examining the relationship between 'mpg' and 'weight' through the lens of regression analysis, we will gain a better understanding of how these two variables interact and influence one another, providing valuable insights into the dynamics of automobile design and performance.
+
+```{r}
+#| code-fold: true
+#| warning: false
+#| message: false
+
+library(tidyverse)
+library(knitr)
+library(kableExtra)
+library(plotly)
+
+mtcars %>% 
+    head(6) %>%
+    select(wt, mpg) %>% 
+    kbl() %>%
+    kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+```
+
+**Visualizing bivariate data**
+
+```{r}
+#| warning: false
+#| message: false
+#| code-fold: true
+#| fig-align: center
+
+
+(bind_rows(
+    (mtcars %>% 
+      mutate(mpg = mean(mpg),
+             wt = mean(wt),
+             type = 'Average Y')),
+    (mtcars %>% 
+     mutate(wt = mean(wt),
+            type = 'Variation of Y')),
+
+    (mtcars %>% 
+      mutate(type = 'Variation of Y\nexplained by X'))
+  ) %>% 
+    ggplot(aes(x=wt, y = mpg, frame = type)) +
+    geom_point(color = 'darkblue',
+               fill='lightblue',
+               size=2.5,
+               shape=21,
+               alpha=.9) +
+    geom_hline(aes(yintercept = mean(mpg)), 
+            linetype = "dashed", 
+            color = "red", 
+            alpha=.5) +
+    theme_classic()
+ ) %>% ggplotly() %>% 
+  animation_opts(
+    2000, easing = "elastic", redraw = F)
+
+```
+
+## Simple Linear Regression
+
+In the *Univariate Data* section, we only focused on the mpg data where we found central tendency and variability. Regression is the process of explaining a variable with another variable(s).
+
+### Explaining a Variable With Another Variable
+
+Simple linear regression is a statistical method used to model the relationship between a single independent variable (explanatory) and a single dependent variable (response). The goal is to find the best-fitting straight line that represents the relationship between the two variables, allowing us to make predictions and understand the underlying trends in the data. In this simple model, we only model a single explanatory variable (not multiple $X$'s)
+
+-   $X$ - A single quantitative explanatory variable (independent)
+
+-   $Y$ - A single quantitative response variable (dependent)
+
+**A line with points**
+
+With points on a graph, we can see if they make a line.
+
+-   **The True Line**: This is usually an unknown association that we try to estimate
+
+-   **Observed Points**: While this is not a line, this represents the actual observed points
+
+-   **The Regression Line**: This is our estimate of the True Line
+
+**True, Observed, and Estimated** $Y$
+
+The **True Regression Line**
+
+$$
+E\{Y\}_i = \beta_0 + \beta_1 X_i 
+$$
+
+The **Observed Points**
+
+Each point, assuming no assumptions are violated, are derived from the formula below 
+
+
+$$
+Y_i = \beta_0 + \beta_1 X_i+ \epsilon_i
+$$
+
+
+While $Y_i = b_0 + b_1X_i + r_i$ is mathematically true, it is important to note that the notation with population parameters is used as this is where the points actually are derived from.
+
+The **Estimated Regression Line** obtained from a regression analysis from the observed points
+
+
+$$
+\hat{Y}_i = b_0 + b_1 X_i
+$$
+
+
+::: {.callout-tip collapse="true"}
+# Terminology
+
+-   $E\{Y\}_i$ - True mean y-value, also $\mu_{Y|X}_i$ or $E\{Y|X\}_i$
+
+-   $\beta_0$ - True $y$-intercept
+
+-   $\beta_1$ - True slope
+
+-   $Y_i$ - Response or dependent variable for the $i^{\text{th}}$ observation.
+
+-   $\epsilon_i$ - Error, distance of dot to true line. $\epsilon_i = Y_i - E\{Y\}_i$
+
+-   $r_i$ - Residual, distance of dot to estimated line. $r_i = Y_i - \hat{Y}_i$
+
+-   $\hat{Y}_i$ - The fitted line
+
+-   $b_0$ - Estimated $y$-intercept, also $\hat{\beta}_0$
+
+-   $b_1$ - Estimated slope, also $\hat{\beta}_1$
+:::
+
+::: {.callout-note collapse="true"}
+# R code for calling your data
+
+
+```{r}
+#| warning: false
+library(tidyverse)
+
+ggplot(mtcars, aes(x=wt, y=mpg)) + 
+  geom_point(shape = 21, color = 'skyblue4', fill = 'skyblue', size = 3) +
+  labs(title="Miles per Gallon vs. Weight of Car", 
+       x="Weight of Car", 
+       y="Miles per Gallon") +
+  theme_classic()  
+
+```
+
+```{r}
+Y <- mtcars$mpg 
+X <- mtcars$wt
+
+i <- 3 #random number
+```
+
+```{r}
+X[i]
+```
+
+```{r}
+Y[i]
+```
+
+```{r}
+#| warning: false
+library(tidyverse)
+
+ggplot(mtcars, aes(x=wt, y=mpg)) + 
+  geom_point(shape = 21, color = 'skyblue4', fill = 'skyblue', size = 3) +
+  labs(title="Miles per Gallon vs. Weight of Car", 
+       x="Weight of Car", y="Miles per Gallon") +
+  theme_classic() +
+  geom_vline(aes(xintercept = wt[i] ), color = "red", linetype = "dashed") +
+  geom_hline(aes(yintercept = mpg[i]), color = "red", linetype = "dashed")
+
+
+```
+
+:::
+
+
+**Estimations**
+
+-   $\hat{Y}_i$ estimates $E\{Y\}_i$
+-   $b_0$ estimates $\beta_0$
+-   $b_1$ estimates $\beta_1$
+-   $r_i$ estimates $\epsilon_i$
+
+### Calculating the Estimated Regression Line
+
+There are multiple ways to calculate the estimated regression line like with calculus or linear algebra.
+
+::: {.callout-tip collapse="true"}
+# The Calculus Behind Best Fit
+
+![](lines3.png)
+
+There exists a combination of $b_0$ and $b_1$ that results in the lowest $\text{SSE}$. Geometrically, we can imagine a shape in three dimensions where two inputs ($b_0$ and $b_1$) produce an output ($\text{SSE}$). Roughly speaking, where the three dimensional slope is equal to 0 is where the combination of $b_0$ and $b_1$ will produce the lowest possible $\text{SSE}$. Since the derivative of an equation can tell us the slope at any given point, we can set both equations' derivatives to zero to find where slope is zero for both equations.
+
+**Step One: Take the partial derivatives with respect to** $b_0$ and $b_1$
+
+The partial derivative with respect to $b_0$ is calculated as so:
+
+$$
+\frac{\partial}{\partial b_0}\sum_{i=1}^n\left(Y_i - (b_0+b_1X_i)\right)^2
+$$
+
+$$
+\begin{align*}
+\mathscr{}
+&= \sum_{i=1}^n\frac{\partial}{\partial b_0}\left(Y_i - (b_0+b_1X_i)\right)^2  &\text{Sum Rule}\\
+&= \sum_{i=1}^n2\left(Y_i - (b_0+b_1X_i)\right)\frac{\partial}{\partial b_0}\left(Y_i - (b_0+b_1X_i)\right) &\text{Power Rule}\\
+&= \sum_{i=1}^n 2\left(Y_i - (b_0+b_1X_i)\right)(-1) &\text{Simplify}\\
+&= -2\sum_{i=1}^n\left(Y_i - (b_0+b_1X_i)\right) &\text{Constant Multiple Rule for Sums}
+\end{align*}
+$$
+
+The partial derivative with respect to $b_1$ is calculated as so:
+
+$$
+\frac{\partial}{\partial b_1}\sum_{i=1}^n\left(Y_i - (b_0+b_1X_i)\right)^2
+$$
+
+$$
+\begin{align*}
+\mathscr{}
+&= \sum_{i=1}^n\frac{\partial}{\partial b_1}\left(Y_i - (b_0+b_1X_i)\right)^2  &\text{Sum Rule}\\
+&= \sum_{i=1}^n2\left(Y_i - (b_0+b_1X_i)\right)\frac{\partial}{\partial b_1}\left(Y_i - (b_0+b_1X_i)\right) &\text{Power Rule}\\
+&= \sum_{i=1}^n 2\left(Y_i - (b_0+b_1X_i)\right)(-X_i) &\text{Simplify}\\
+&= -2\sum_{i=1}^nX_i\left(Y_i - (b_0+b_1X_i)\right) &\text{Constant Multiple Rule for Sums}
+\end{align*}
+$$
+
+**Step Two: Set the simplified partial derivatives to zero and solve for** $b_0$ **and** $b_1$ **respectively**
+
+Solving for $b_0$: $$0 = -2\sum_{i=1}^n\left(Y_i - (b_0+b_1X_i)\right)$$
+
+$$
+\begin{align*}
+\mathscr{}
+&0 = \sum_{i=1}^n\left(Y_i - b_0-b_1x_i\right) &\text{Simplify}\\
+&0 = \sum_{i=1}^nY_i - \sum_{i=1}^nb_0-\sum_{i=1}^nb_1X_i &\text{Sum Rule}\\
+&0 = \sum_{i=1}^nY_i - nb_0-b_1\sum_{i=1}^nX_i &\text{Constant Multiple Rule for Sums}\\
+& nb_0 = \sum_{i=1}^nY_i -b_1\sum_{i=1}^nX_i &\text{Simplify}\\
+& b_0 = \frac{\sum_{i=1}^nY_i}{n} -\frac{b_1\sum_{i=1}^nX_i}{n} &\text{Simplify}\\
+& b_0 = \bar{Y} - b_1\bar{X} &\text{Simplify to average}\\
+\end{align*}
+$$
+
+Solving for $b_1$ while substituting $b_0$:
+
+$$
+0 = -2\sum_{i=1}^nX_i\left(Y_i - (b_0+b_1X_i)\right)
+$$
+
+$$
+\begin{align*}
+\mathscr{}
+&0 = \sum_{i=1}^nX_i\left(Y_i - ((\bar{Y} - b_1\bar{X})+b_1X_i)\right) &\text{Substitute }b_0\\
+&0 = \sum_{i=1}^nX_i(Y_i-\bar{Y}) - \sum_{i=1}^nb_1X_i(X_i-\bar{X})&\text{Sum Rule}\\
+&0 = \sum_{i=1}^nX_i(Y_i-\bar{Y}) - b_1\sum_{i=1}^nX_i(X_i-\bar{X})&\text{Constant Multiple Rule for Sums}\\
+& b_1= \frac{\sum_{i=1}^nX_i(Y_i-\bar{Y})}{\sum_{i=1}^nX_i(X_i-\bar{X})} &\text{Simplify}\\
+& b_1= \frac{\sum_{i=1}^n(X_i-\bar{X})(Y_i-\bar{Y})}{\sum_{i=1}^n(X_i-\bar{X})^2} &\text{Simplify (steps skipped)}\\
+\end{align*}
+$$
+
+**Step Three: Construct the formula**
+
+Once you have found $b_0$ and $b_1$ as so:
+
+-   $b_0 = \bar{Y} - b_1\bar{X}$
+
+-   $b_1= \frac{\sum_{i=1}^n(X_i-\bar{X})(Y_i-\bar{Y})}{\sum_{i=1}^n(X_i-\bar{X})^2}$
+
+($\bar{Y}$ represents the mean of the $Y$ values and $\bar{X}$ represents the mean of the $X$ values)
+
+We can construct the formula for $\hat{Y}_i$ as the following:
+
+$$
+\hat{Y}_i = b_0 + b_1X_i
+$$
+
+Which means $b_0$ is the change in the mean of $Y$ for a $1$ unit increase in $X$.
+:::
+
+::: {.callout-tip collapse="true"}
+# Least Squares in Linear Algebra
+
+**Step One: Organize the data into vectors** Let's assume you have $n$ observations of the independent variable $\mathbf{X}$ and dependent variable $\mathbf{Y}$. Organize the data into two vectors:
+
+$$
+\mathbf{X} = \begin{bmatrix} X_1 \\ X_2 \\ \vdots \\ X_n \end{bmatrix}, \quad \mathbf{Y} = \begin{bmatrix} Y_1 \\ Y_2 \\ \vdots \\ Y_n \end{bmatrix}
+$$
+
+**Step Two: Create a design matrix**
+
+Create a design matrix $\mathbf{A}$ by adding a column of ones to represent the intercept term
+
+$$
+\mathbf{A} = \begin{bmatrix} 1 & X_1 \\ 1 & X_2 \\ \vdots & \vdots \\ 1 & X_n \end{bmatrix}
+$$
+
+**Step Three: Make a Projection:**
+
+The goal of simple linear regression is to find the best-fitting line, which can be viewed as projecting the dependent variable $\mathbf{Y}$ onto the column space of the design matrix $\mathbf{A}$. This projection, denoted by $\mathbf{\hat{Y}}$, can be computed as:
+
+$$
+\mathbf{\hat{Y}} = \mathbf{A}(\mathbf{A}^T\mathbf{A})^{-1}\mathbf{A}^T\mathbf{Y}
+$$
+
+This formula comes from the orthogonal projection of $\mathbf{Y}$ onto the column space of $\mathbf{A}$, which minimizes the squared residuals.
+
+**Step Four: Compute the coefficients:**
+
+The coefficients of the best-fitting line can be found by solving the following linear system:
+
+$$
+\mathbf{A}^T\mathbf{A}\mathbf{\beta} = \mathbf{A}^T\mathbf{Y}
+$$
+
+Here, $\mathbf{\beta}$ is a vector containing the coefficients $\beta_0$ and $\beta_1$:
+
+$$
+\mathbf{\beta} = \begin{bmatrix} \beta_0 \\ \beta_1 \end{bmatrix}
+$$
+
+To solve for $\mathbf{\beta}$, you can use the following formula:
+
+$$
+\mathbf{\beta} = (\mathbf{A}^T\mathbf{A})^{-1}\mathbf{A}^T\mathbf{Y}
+$$
+
+**Step Five: Construct the formula:**
+
+Once you have computed the coefficients $\beta_0$ and $\beta_1$, you can write the estimated regression line as:
+
+$$
+\hat{Y}_i = \beta_0 + \beta_1 X_i
+$$
+
+The estimated slope, $\beta_1$, indicates the average change in the dependent variable ($Y$) for a one-unit increase in the independent variable ($X$). The estimated intercept, $\beta_0$, represents the predicted value of $Y$ when $X = 0$.
+:::
+
+The formula from calculus to find the coefficients for the estimated regression line is as so:
+
+-   $b_0 = \bar{Y} - b_1\bar{X}$
+
+-   $b_1= \frac{\sum_{i=1}^n(X_i-\bar{X})(Y_i-\bar{Y})}{\sum_{i=1}^n(X_i-\bar{X})^2}$
+
+($\bar{Y}$ represents the mean of the $Y$ values and $\bar{X}$ represents the mean of the $X$ values)
+
+::: {.callout-note collapse="true"}
+# R code for calculating the coefficients for the estimated regression line
+
+```{r}
+mylm <- lm(mpg ~ wt, data = mtcars)
+pander::pander(summary(mylm))
+```
+
+```{r}
+b_0 <- mylm$coefficients[1]
+b_1 <- mylm$coefficients[2]
+```
+
+```{r}
+b_0
+```
+
+```{r}
+b_1
+```
+
+```{r}
+ggplot(mtcars, aes(x=wt, y=mpg)) +
+geom_point(shape = 21, color = 'skyblue4', fill = 'skyblue', size = 3) +
+stat_function(fun = function(x) b_0 + b_1 * x) + 
+theme_classic() 
+```
+:::
+
+### Visualizing Simple Linear Regression
+
+Below, we have charted both variables to try and see if some of the variance of $Y$ is explained by $X$. The blue line represents the estimated regression line.
+
+The goal of the blue line below is to show the association between the $X$ and $Y$ variable. The slope can tell us how much our Y value changes by a change in our $X$ value.
+
+
+```{r}
+#| warning: false
+#| message: false
+#| code-fold: true
+
+library(tidyverse)
+library(plotly)
+
+
+(ggplot(mtcars, aes(x = wt, y = mpg)) +
+  geom_point(color = 'darkblue',
+               fill='lightblue',
+               size=2.5,
+               shape=21,
+               alpha=.9) +
+  theme_classic() +
+  geom_smooth(method = "lm", se = FALSE) 
+  ) %>% 
+  ggplotly()
+
+```
+
+## Attributes of Regression
+
+### Residuals
+
+As you can see from the plot, the points do not lie exactly on the estimated regression line. For any given point, there is a distance between the point and the regression line. This distance is called the residual.
+
+The formula to calculate any given residual is below:
+
+$$
+\begin{align*}
+r_i &= \left(Y_i - \hat{Y_i}\right)\\
+r_i &= \left(Y_i - (b_0+b_1X_i)\right)
+\end{align*}
+$$
+
+### SSE: the Sum of Squared Errors
+
+```{r}
+#| warning: false
+#| message: false
+#| code-fold: true
+
+model <- lm(mpg ~ wt, data = mtcars)
+
+mtcars$residuals <- residuals(model)
+
+(ggplot(mtcars, aes(x = wt, y = mpg)) +
+  theme_classic() +
+  geom_smooth(method = "lm", se = FALSE) +
+  geom_segment(aes(x = wt, xend = wt, y = mpg, yend = mpg - residuals), color = 'red') +
+  geom_point(color = 'darkblue',
+               fill='lightblue',
+               size=2.5,
+               shape=21,
+               alpha=.9)
+  ) %>% 
+  ggplotly()
+
+```
+
+In the graph above, we can see the vertical distance between the actual points and the predicted line. Some points have a very large red line which means that the model may not explain that specific point very well. Conversely, the points with a small red line seem to be explained by the model very well.
+
+To make sure the residuals (distances from the regression line) are positive, we will square them. We can add them all up to get a sum. Below is the formula to get the sum of the squared residuals
+
+```{r}
+#| warning: false
+#| message: false
+#| code-fold: true
+
+
+(ggplot(mtcars, aes(x = wt, y = mpg)) +
+  theme_classic() +
+  geom_smooth(method = "lm", se = FALSE) +
+  geom_rect(aes(xmin=wt - abs(mpg-mylm$fit)*.13, xmax=wt, ymin=mylm$fit, ymax=mpg), color = 'red',alpha=.2) +
+  geom_segment(aes(x = wt, xend = wt, y = mpg, yend = mpg - residuals), color = 'red') +
+  geom_point(color = 'darkblue',
+               fill='lightblue',
+               size=2.5,
+               shape=21,
+               alpha=.9) +
+  coord_cartesian(xlim=c(1,6)) +
+  annotate("text", x = 4.5, y = 27, label = "SSE: Sum of Squares Errors:<br> the sum of all the boxes<br>from the regression line<br><br>-measures the unexplained variance of<br>this variable (Temperature)<br><br>SSE = Σ(Yᵢ - Ŷ)²")
+ ) %>%
+  ggplotly()
+
+
+  
+
+```
+
+$$
+\begin{align*}
+\text{SSE} &= \sum_{i=1}^n \left(r_i\right)^2 \\
+\text{SSE} &= \sum_{i=1}^n\left(Y_i - \hat{Y_i}\right)^2\\
+\text{SSE} &= \sum_{i=1}^n\left(Y_i - (b_0+b_1X_i)\right)^2
+\end{align*}
+$$
+
+(Note: SSE is used because E stands for error, the statistic that residuals try to approximate)
+
+(Note: The estimated regression line or line of best fit from the observed points is represented by the equation $\hat{Y}_i=b_0+b_1X_i$ , where $b_1$ is the estimated slope of the line and $b_0$ is the estimated y-intercept.)
+
+### MSE: Mean Squared Error
+
+Geometrically, we can imagine the error "amount" as the area of the boxes. This is why when we add up all the boxes, we get the sum of squares error or $\text{SSE}$. This means we can estimate the average size of the box with a formula you might expect:
+
+$$
+\text{MSE} = \frac{\text{SSE}}{\text{degrees of freedom}} \\\;\;\\\;(\text{where degrees of freedom}=n-2)
+$$
+
+::: {.callout-tip collapse="true"}
+# Degrees of Freedom
+
+Since two estimates ($b_0$ and $b_1$) are used to calculate $\text{MSE}$ from our sample about the population, we have lost two degrees of freedom from our sample. Thus, degrees of freedom is now equal to $n-2$
+:::
+
+Thus we can integrate it with our previous formulas
+
+$$
+\begin{align*}
+\text{MSE} &= \frac{\sum_{i=1}^n \left(r_i\right)^2}{\text{degrees of freedom}} \\
+\text{MSE} &= \frac{\sum_{i=1}^n\left(Y_i - \hat{Y_i}\right)^2}{\text{degrees of freedom}}\\
+\text{MSE} &= \frac{\sum_{i=1}^n\left(Y_i - (b_0+b_1X_i)\right)^2}{\text{degrees of freedom}}
+\\\;\\&(\text{where degrees of freedom}=n-2)
+\end{align*}
+$$
+
+### RMSE: Root Mean Squared Error or Residual Standard Error
+
+The above formula calculates the average box size- but what about the average line size? Another similarly intuitive formula , we get:
+
+$$
+\text{RMSE} = \sqrt{\text{MSE}}
+$$
+
+Thus we can integrate it with our previous formulas
+
+$$
+\begin{align*}
+\text{RMSE} &= \sqrt{\frac{\text{SSE}}{\text{degrees of freedom}}} \\
+\text{RMSE} &= \sqrt{\frac{\sum_{i=1}^n \left(r_i\right)^2}{\text{degrees of freedom}}} \\
+\text{RMSE} &= \sqrt{\frac{\sum_{i=1}^n\left(Y_i - \hat{Y_i}\right)^2}{\text{degrees of freedom}}}\\
+\text{RMSE} &= \sqrt{\frac{\sum_{i=1}^n\left(Y_i - (b_0+b_1X_i)\right)^2}{\text{degrees of freedom}}}
+\\\;\\&(\text{where degrees of freedom}=n-2)
+\end{align*}
+$$
+
+::: {.callout-tip collapse="true"}
+# Minimizing Residuals
+
+A single residual, $r_i$, is the distance between an observed point and the estimated regression line. Given any line, we can calculate how different our predicted value, $\hat{Y_i}$ is from our actual data point, $Y_i$. This vertical distance from the real y output and the predicted y output is called the residual. The formula for any given residual is represented as such
+
+$$
+\begin{align*}
+r_i &= Y_i-\hat{Y}_i\\
+r_i &= Y_i - (b_0+b_1X_i)
+\end{align*}
+$$
+
+The goal of simple linear regression is to minimize the sum of the squared errors ($\text{SSE}$). This is represented by the equations:
+
+$$
+\begin{align*}
+\text{SSE} &= \sum_{i=1}^n \left(r_i\right)^2 \\
+\text{SSE} &= \sum_{i=1}^n\left(Y_i - \hat{Y_i}\right)^2\\
+\text{SSE} &= \sum_{i=1}^n\left(Y_i - (b_0+b_1X_i)\right)^2
+\end{align*}
+$$
+
+The closer any given line is to the best fit line, the lower the $\text{SSE}$ will be. In fact, the best fit line represents the line with the lowest possible $\text{SSE}$. This line is found by manipulating the values for $b_0$ and $b_1$ since the $X$ values must stay the same.
+:::
+
+### SSR: The Sum of Squares Regression
+
+The point of regression is to try to find an association between two variables. If a line explains some of the association between two variables, we should be able to "count" how much association it explains.
+
+```{r}
+#| warning: false
+#| message: false
+#| code-fold: true
+
+
+mylm <- lm(mpg ~ wt, data = mtcars)
+
+
+
+(ggplot(mtcars %>% mutate(mpg = predict(mylm, data.frame(wt = wt))), aes(x = wt, y = mpg)) +
+  theme_classic() +
+  labs(
+    title = "Complex X by Max Temperature in 2 days (With residuals)",
+    x = "Complex X",
+    y = "Max Temperature in two days"
+  ) +
+  geom_smooth(method = "lm", se = FALSE) +
+  geom_rect(aes(xmin=wt, xmax=wt + (mean(mpg)-mpg)*.1, ymin=mpg, ymax=mean(mpg)), color = 'red',alpha=.2) +
+  geom_segment(aes(x = wt, xend = wt, y = mpg, yend = mean(mpg)), color = 'red') +
+  geom_point(color = 'darkblue',
+               fill='lightblue',
+               size=2.5,
+               shape=21,
+               alpha=.9) +
+  geom_hline(aes(yintercept = mean(mpg)), 
+           linetype = "dashed", 
+           color = "red", 
+           alpha=.3) +
+  coord_cartesian(xlim=c(1,6), ylim=c(8,31.5)) +
+  annotate("text", x = 5, y = 26.5, label = "SSR: Sum of Squares Regression:<br> the sum of all the boxes<br>from the mean to regression line<br><br>-measures the explained variance of<br>this variable (Temperature)<br><br>SSR = Σ(Ŷᵢ - Ȳ)²")
+ ) %>%
+  ggplotly()
+```
+
+SSR essentially measures the extent to which the regression line captures the relationship between the X and Y. A higher SSR value indicates that the regression line is better at explaining the observed variation in the data. Conversely, a lower SSR value suggests that the regression line may not be a good fit for the data.
+
+The SSR formula is as so:
+
+$$
+\text{SSR} = \sum_{i=1}^{n} (\hat{Y}_{i} - \bar{Y})^2
+$$
+
+### Measures of Distances And Their Names
+
+```{r}
+#| warning: false
+#| message: false
+#| code-fold: true
+
+mylm <- lm(mpg~wt, data=mtcars)
+
+df1 <- bind_rows(
+  mtcars %>% mutate(
+           wt=mean(wt),
+           mpg=mean(mpg),
+           type='0, empty',
+           xmin = wt,
+           xmax = wt + (mean(mpg)-mpg)+.1,
+           ymin = mpg,
+           ymax = mean(mpg),
+           rect_alpha=.01),
+  mtcars %>% mutate(
+           wt=mean(wt),
+           type='1, ssto',
+           xmin = wt,
+           xmax = (wt+(mean(mpg)-mpg)*.07),
+           ymin = mpg,
+           ymax = mean(mpg),
+           rect_alpha=.2),
+  mtcars %>% mutate(
+           type='2, sse',
+           xmin = wt - abs(mpg-mylm$fit)*.07, 
+           xmax = wt,
+           ymin = mylm$fit,
+           ymax = mpg,
+           rect_alpha=.2),
+  mtcars %>% mutate(
+           mpg = predict(mylm, data.frame(wt = wt)),
+           type='3, ssr',
+           xmin = wt, 
+           xmax=wt + (mean(mpg)-mpg)*.07,
+           ymin = mpg,
+           ymax = mean(mpg),
+           rect_alpha=.2),
+  mtcars %>% mutate(
+           mpg = mean(mpg), 
+           type='4, mean',
+           xmin = wt,
+           xmax = wt + (mean(mpg)-mpg) +.1,
+           ymin = mpg,
+           ymax = mean(mpg),
+           rect_alpha=.01)
+  ) %>% 
+    select(wt, mpg, type, xmin, xmax, ymin, ymax,rect_alpha)
+
+(df1 %>% 
+  ggplot(aes(x = wt, y = mpg)) +
+  theme_classic() +
+  stat_function(fun = function(x) b_0 + b_1 * x, 
+                linetype = "dashed", 
+                color = "blue", 
+                alpha=.3) +
+  geom_rect(aes(frame = type, xmin=xmin, xmax=xmax, ymin=ymin, ymax=ymax), alpha=.3, fill='gray',color='red') +
+  geom_hline(aes(yintercept = mean(mpg)), 
+             linetype = "dashed", 
+             color = "red", 
+             alpha=.3) +
+  geom_point(aes(frame = type),
+               color = 'darkblue',
+               fill='lightblue',
+               size=2.5,
+               shape=21,
+               alpha=.9) +
+  coord_cartesian(xlim=c(1.5,5.5), ylim=c(7,35))
+  ) %>% 
+  ggplotly() %>% animation_opts(
+    2000, easing = "elastic", redraw = FALSE
+  )
+
+```
+
+In the example above, take note of three distances.
+
+-   $0 \rightarrow 1$: $\text{SSTO}$: The sum of "each point's distance to the mean, squared"
+
+-   $1 \rightarrow 2$: Regression: adding in an explanatory variable
+
+-   $2 \rightarrow 3$: $\text{SSE}$: The sum of "each point's distance to the line, squared"
+
+-   $3 \rightarrow 4$: $\text{SSR}$: The sum of "each point's expected distance to the mean"
+
+::: {.callout-note collapse="true"}
+# R code for calculating the above terms
+
+```{r}
+mylm <- lm(mpg ~ wt, data=mtcars)
+
+fitted_values <- mylm$fitted.values
+y_bar <- mean(mtcars$mpg)
+
+SSE <- sum(mylm$residuals^2)
+SSR <- sum((fitted_values - y_bar)^2)
+SSTO <- sum((mtcars$mpg - y_bar)^2)
+
+pander::pander(cat("Sum of Squared Errors (SSE):", SSE, "\n"))
+pander::pander(cat("Sum of Squares Regression (SSR):", SSR, "\n"))
+pander::pander(cat("Total Sum of Squares (SSTO):", SSTO, "\n"))
+```
+:::
+
+## Coefficient of Determination
+
+**Ratio of explained variance and total variance**
+
+![](lines2.png)
+
+We know why the points would be, in total, $\text{SSR}$ away from the average (since the estimated regression line explains the variance), but we don't know why the points are $\text{SSE}$ away from the estimated regression line.
+
+Notice how $\text{SSTO} = \text{SSE} + \text{SSR}$. This can be equivalently written as $\text{Total variance} = \text{Unexplained variance} + \text{Explained variance}$
+
+We can show this relationship of explained/total variance as a coefficient.
+
+### Calculating the Coefficient of Determination
+
+Using the terms above, we can calculate a ratio of the variance of $Y$ explained by the estimated regression line ($\text{SSR}$) and the total variance of $Y$ from the average $Y$ value ($\text{SSTO})$.
+
+$$
+R^2 = \frac{\text{SSR}}{\text{SSTO}} = \frac{\text{Explained Variance}}{\text{Total Variance}}
+$$ $$
+R^2 = 1 - \frac{\text{SSE}}{\text{SSTO}} = \frac{\text{Unexplained Variance}}{\text{Total Variance}}
+$$
+
+All $R^2$ represents is the ratio between variance explained by the model and total variance.
+
+![](lines4.png)
+
+::: {.callout-note collapse="true"}
+# R code for calculating the coefficient of determination
+
+```{r}
+lm_summary <- summary(mylm)
+
+pander::pander(lm_summary$r.squared)
+
+#or
+
+pander::pander(SSR/SSTO)
+
+#or
+
+pander::pander(1 - SSE/SSTO)
+```
+:::
+
+### Slope and significance vs the $R^2$ 
+
+Slope: The slope indicates how much $Y$ changes for a one-unit change in $X$. This means that if our slope is significantly different than 0 ($\text{p-value} < \alpha$), we reject the notion that there is no association between $X$ and $Y$.
+
+![](lines5.png)
+
+$R^2$: For the graphic above, notice how the slope is exactly the same for each graph- the difference is how much the data varies given the same slope. This is important since given the rule (slope), $R^2$ will describe how 'obedient' the data is to the law.
+
+::: {.callout-tip collapse="true"}
+# Assumptions for Simple Linear Regression
+
+If we are to make a model off the points displayed as such:
+
+$$
+Y_i = \beta_0 + \beta_1 X_i+ \epsilon_i
+$$
+
+We need to confirm the following assumptions
+
+-   **1) Linear relation**: Linear relationship between $X$ and $Y$
+
+-   **2) Normal errors**: $\epsilon \sim \mathcal{N}(0,\sigma^2)$, the error terms are normally distributed with a mean of 0
+
+-   **3) Constant variance**: The varianceB $O^2$ of the error terms is constant (the same) across all values of $X_i$
+
+-   **4) Fixed** $X$: the $X$ values can be considered fixed and measured without error
+
+-   **5) Independent errors**: $\epsilon$ is independent
+
+$Y_i = \beta_0 + \beta_1 X_i+ \epsilon_i :\epsilon \sim \mathcal{N}(0,\sigma^2)$
+
+Given $X$, $Y \sim \mathcal{N}(\beta_0 +\beta_1X,\sigma^2)$
+:::
+
+::: {.callout-note collapse="true"}
+# R code for testing the assumptions for simple linear regression
+
+Three plots in R can be used to test the assumptions for simple linear regression:
+
+**Residuals versus Fitted-values Plot** The linear relationship and constant variance assumptions can be diagnosed using a residuals versus fitted-values plot. The fitted values are the $Y^i$
+
+-   The residuals are the $r_i$
+
+-   This plot compares the residual to the magnitude of the fitted-value. No discernable pattern in this plot is desirable.
+
+**Q-Q Plot of the Residuals**
+
+The normality of the error terms can be assessed by considering a normal probability plot (Q-Q Plot) of the residuals. If the residuals appear to be normal, then the error terms are also considered to be normal. If the residuals do not appear to be normal, then the error terms are also assumed to violate the normality assumption.
+
+**Residuals versus Order Plot**
+
+When the data is collected in a specific order, or has some other important ordering to it, then the independence of the error terms can be assessed. This is typically done by plotting the residuals against their order of occurrance. If any dramatic trends are visible in the plot, then the independence assumption is violated.
+
+```{r}
+par(mfrow=c(1,3)) #Residuals versus Fitted-values Plot: Checks Assumptions #1 and #3
+
+plot(mylm,which=1:2) #Q-Q Plot of the Residuals: Checks Assumption #2
+
+plot(mylm$residuals) #Residuals versus Order Plot: Checks Assumption #5
+
+```
+:::

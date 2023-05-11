@@ -1,0 +1,43 @@
+# Statistics and Data
+
+## The Central Dogma of Statistics {.unnumbered}
+
+Similar to the central dogma in biology, statistical inference also has a core principle that guides its objectives. This central dogma centers around trying to know a characteristic about a large population. Since measuring the entire population is costly and challenging, a subset of a population called a sample is taken to estimate the characteristics of the entire population using probability.
+
+## Levels of Data
+
+Measurement, or data collection, is "the assignment of numerals to objects or events according to rules" [@stevens1946]. In general, when collecting and analyzing data, it is important to understand the levels of measurement. These levels determine the precision of the variables, which in turn affects the types of statistical analyses that can be conducted. There are four levels of data measurement: nominal, ordinal, interval, and ratio. Each level builds upon the previous one, increasing in precision and mathematical complexity.
+
+### Nominal Data
+
+Nominal data is the simplest level of data in which objects are assigned a number based on the category they belong to. It refers to variables that are categorized into qualitative groups or labels without any order or hierarchy. The only information provided by nominal data is the group an observation belongs to. Examples of nominal data include hair color, gender, and religion. Mathematical operations are limited for nominal data, with the mode being the only appropriate measure. Nominal data requires that categories be mutually exclusive (categories do not overlap) and exhaustive (every object belongs to a category and there are no leftover objects).
+
+### Ordinal Data
+
+Ordinal data builds upon nominal data by categorizing variables into ordered or hierarchical groups. Although the categories follow a specific order, the difference between them is not defined. Ordinal data allows for comparisons like "less than" and "greater than," as well as equality and inequality. However, operations such as addition and subtraction are not applicable. Examples of ordinal data include education level, academic grades, and the Likert Scale.
+
+### Interval Data
+
+Interval data further builds upon ordinal data by specifying equal intervals between subsequent values. This allows for the calculation of the arithmetic mean, as well as the mode and median. Interval data also allows for linear transformations, but ratios cannot be applied due to the lack of a meaningful zero value. Examples of interval data include temperature measured in degrees Celsius or Fahrenheit and calendar years.
+
+### Ratio Data
+
+Ratio data is similar to interval data but includes a meaningful zero value, allowing for the calculation of ratios between data points. With this level of measurement, all mathematical operations, including multiplication and division, are applicable. Examples of ratio data include weight, height, age, and amounts of money. Since this data type has an absolute zero, this means that we can natively make ratio comparisons. For example, if a boy weighs 100 lb. and a girl weighs 200 lbs. it is legal from this information to say that since 100 = 200/2, the boy is half the weight of the girl. This is not legal for temperature. If place A is 15 degrees Celsius (59 F) and place B is 30 degrees Celsius (86 F), it is not legal to say that place B is twice as hot as place A. 
+
+### Levels of measurement chart
+
+| Mathematical Function     | Nominal | Ordinal | Interval | Ratio |
+|---------------------------|---------|---------|----------|-------|
+| Classification            | ✔️      | ✔️      | ✔️       | ✔️    |
+| Counting                  | ✔️      | ✔️      | ✔️       | ✔️    |
+| Proportion/Percentages    | ✔️      | ✔️      | ✔️       | ✔️    |
+| Rank Ordering             | ❌      | ✔️      | ✔️       | ✔️    |
+| Addition                  | ❌      | ❌      | ✔️       | ✔️    |
+| Subtraction               | ❌      | ❌      | ✔️       | ✔️    |
+| Dividing to form averages | ❌      | ❌      | ✔️       | ✔️    |
+| Dividing to form ratios   | ❌      | ❌      | ❌       | ✔️    |
+
+: Acceptable mathematical operations for each level of data. [@warne2020]
+
+
+
