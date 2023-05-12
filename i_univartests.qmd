@@ -1,0 +1,51 @@
+---
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+# Univariate Hypothesis Testing
+
+## Null Hypothesis Significance Testing
+
+A null hypothesis and alternative hypothesis are fundamental concepts in hypothesis testing, a key aspect of inferential statistics. Hypothesis testing is a statistical method used to test the validity of a claim or assertion based on sample data, with the goal of making inferences about a population.
+
+**Null Hypothesis**
+
+The null hypothesis (denoted as $H_0$) is a statement of no effect or no difference. It represents the default assumption that there is no relationship between the variables under investigation or that the treatment has no effect. The null hypothesis typically asserts that the observations are the result of chance or that the observed differences can be attributed to random variation.
+
+**Alternative Hypothesis**
+
+The alternative hypothesis (denoted as $H_a$) is a statement that contradicts the null hypothesis. It represents the claim that there is a relationship between the variables or that the treatment has an effect. The alternative hypothesis is what researchers hope to provide evidence for through the process of hypothesis testing.
+
+**p-values**
+
+The central dogma of statistics is to make estimates about the population based on samples. Null hypothesis significance testing (NHST) is a widely used approach to evaluate the evidence against the null hypothesis. In this framework, a test statistic is calculated based on the sample data, and its probability distribution is determined assuming the null hypothesis is true. This probability, called the p-value, represents the likelihood of observing a test statistic as extreme or more extreme than the one obtained if the null hypothesis were indeed true.
+
+When the p-value is smaller than a predetermined significance level (commonly denoted as $\alpha$, e.g., $\alpha = 0.05$), the null hypothesis is rejected in favor of the alternative hypothesis. This decision suggests that the observed effect is unlikely to be a result of chance alone, and there is evidence to support the existence of a relationship or an effect. However, if the p-value is greater than the chosen significance level, the null hypothesis is not rejected, and there is insufficient evidence to support the alternative hypothesis. It is crucial to note that failing to reject the null hypothesis does not prove it is true; rather, it indicates that there is not enough evidence to conclude that the alternative hypothesis is true. Additionally, the p-value is subject to various limitations and potential misinterpretations, so it is essential to consider effect sizes, confidence intervals, and other aspects of the data when making conclusions from hypothesis testing.
+
+
+# Z-test
+
+Below is a set of univariate data about height of basketball players. 
+
+
+```{r}
+#| warning: false
+#| message: false
+#| code-fold: true
+
+library(tidyverse)
+library(plotly)
+
+df <- read_csv('data/height_nba.csv') %>% rename(Height = `Height (Inches)`)
+
+(df %>% ggplot(aes(x=Height)) + 
+  theme_classic() +
+  geom_histogram(fill='lightblue', color="black", size=.1, alpha=.9, binwidth = 1) ) %>% 
+  ggplotly()
+
+```
+
+
+The population standard deviation is 2.75 inches for adult men in the US- thus sigma (variance) is known.

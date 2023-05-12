@@ -323,7 +323,7 @@ Below is the code to find the squared distance from the mean:
 
 **Step Four: Calculate the sum of squared deviations**
 
-![](ssto.png)
+![](images/ssto.png)
 
 From the plot above, look at the squares create above. We can sum up all the squares to make a mega-square. This is called the $\text{Total Sum of Squares}$ or $\text{SSTO}$
 
@@ -339,7 +339,7 @@ SSTO <- sum((Y_i - Y_bar)^2)
 
 **Five: Divide the Total Sum of Squares by the sum**
 
-![](variance.png)
+![](images/variance.png)
 
 The sum of observations divided by the number of observations is an average. We have the total sum of squares, but instead of dividing it by the number of observations, we will divide it by number of observations - 1.
 
@@ -376,7 +376,7 @@ $$
 $$
 
 
-![](sd.png)
+![](images/sd.png)
 
 
 ```{r}

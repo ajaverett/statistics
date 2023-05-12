@@ -1,7 +1,7 @@
 ---
 output: html_document
 editor_options: 
-  chunk_output_type: console
+  chunk_output_type: inline
 ---
 
 # Bivariate Data
@@ -205,7 +205,7 @@ There are multiple ways to calculate the estimated regression line like with cal
 ::: {.callout-tip collapse="true"}
 # The Calculus Behind Best Fit
 
-![](lines3.png)
+![](images/lines3.png)
 
 There exists a combination of $b_0$ and $b_1$ that results in the lowest $\text{SSE}$. Geometrically, we can imagine a shape in three dimensions where two inputs ($b_0$ and $b_1$) produce an output ($\text{SSE}$). Roughly speaking, where the three dimensional slope is equal to 0 is where the combination of $b_0$ and $b_1$ will produce the lowest possible $\text{SSE}$. Since the derivative of an equation can tell us the slope at any given point, we can set both equations' derivatives to zero to find where slope is zero for both equations.
 
@@ -468,7 +468,6 @@ To make sure the residuals (distances from the regression line) are positive, we
 #| message: false
 #| code-fold: true
 
-
 (ggplot(mtcars, aes(x = wt, y = mpg)) +
   theme_classic() +
   geom_smooth(method = "lm", se = FALSE) +
@@ -479,13 +478,9 @@ To make sure the residuals (distances from the regression line) are positive, we
                size=2.5,
                shape=21,
                alpha=.9) +
-  coord_cartesian(xlim=c(1,6)) +
-  annotate("text", x = 4.5, y = 27, label = "SSE: Sum of Squares Errors:<br> the sum of all the boxes<br>from the regression line<br><br>-measures the unexplained variance of<br>this variable (Temperature)<br><br>SSE = Σ(Yᵢ - Ŷ)²")
+  coord_cartesian(xlim=c(1,6)) 
  ) %>%
   ggplotly()
-
-
-  
 
 ```
 
@@ -587,11 +582,6 @@ mylm <- lm(mpg ~ wt, data = mtcars)
 
 (ggplot(mtcars %>% mutate(mpg = predict(mylm, data.frame(wt = wt))), aes(x = wt, y = mpg)) +
   theme_classic() +
-  labs(
-    title = "Complex X by Max Temperature in 2 days (With residuals)",
-    x = "Complex X",
-    y = "Max Temperature in two days"
-  ) +
   geom_smooth(method = "lm", se = FALSE) +
   geom_rect(aes(xmin=wt, xmax=wt + (mean(mpg)-mpg)*.1, ymin=mpg, ymax=mean(mpg)), color = 'red',alpha=.2) +
   geom_segment(aes(x = wt, xend = wt, y = mpg, yend = mean(mpg)), color = 'red') +
@@ -604,10 +594,10 @@ mylm <- lm(mpg ~ wt, data = mtcars)
            linetype = "dashed", 
            color = "red", 
            alpha=.3) +
-  coord_cartesian(xlim=c(1,6), ylim=c(8,31.5)) +
-  annotate("text", x = 5, y = 26.5, label = "SSR: Sum of Squares Regression:<br> the sum of all the boxes<br>from the mean to regression line<br><br>-measures the explained variance of<br>this variable (Temperature)<br><br>SSR = Σ(Ŷᵢ - Ȳ)²")
+  coord_cartesian(xlim=c(1,6), ylim=c(8,31.5))
  ) %>%
   ggplotly()
+
 ```
 
 SSR essentially measures the extent to which the regression line captures the relationship between the X and Y. A higher SSR value indicates that the regression line is better at explaining the observed variation in the data. Conversely, a lower SSR value suggests that the regression line may not be a good fit for the data.
@@ -730,7 +720,7 @@ pander::pander(cat("Total Sum of Squares (SSTO):", SSTO, "\n"))
 
 **Ratio of explained variance and total variance**
 
-![](lines2.png)
+![](images/lines2.png)
 
 We know why the points would be, in total, $\text{SSR}$ away from the average (since the estimated regression line explains the variance), but we don't know why the points are $\text{SSE}$ away from the estimated regression line.
 
@@ -744,13 +734,16 @@ Using the terms above, we can calculate a ratio of the variance of $Y$ explained
 
 $$
 R^2 = \frac{\text{SSR}}{\text{SSTO}} = \frac{\text{Explained Variance}}{\text{Total Variance}}
-$$ $$
+$$ 
+
+
+$$
 R^2 = 1 - \frac{\text{SSE}}{\text{SSTO}} = \frac{\text{Unexplained Variance}}{\text{Total Variance}}
 $$
 
 All $R^2$ represents is the ratio between variance explained by the model and total variance.
 
-![](lines4.png)
+![](images/lines4.png)
 
 ::: {.callout-note collapse="true"}
 # R code for calculating the coefficient of determination
@@ -774,7 +767,7 @@ pander::pander(1 - SSE/SSTO)
 
 Slope: The slope indicates how much $Y$ changes for a one-unit change in $X$. This means that if our slope is significantly different than 0 ($\text{p-value} < \alpha$), we reject the notion that there is no association between $X$ and $Y$.
 
-![](lines5.png)
+![](images/lines5.png)
 
 $R^2$: For the graphic above, notice how the slope is exactly the same for each graph- the difference is how much the data varies given the same slope. This is important since given the rule (slope), $R^2$ will describe how 'obedient' the data is to the law.
 

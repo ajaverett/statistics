@@ -4,7 +4,7 @@ editor_options:
   chunk_output_type: console
 ---
 
-# Univariate Distributions
+## Univariate Distributions
 
 A normal distribution, also known as a Gaussian distribution, is a continuous probability distribution that has a bell-shaped curve. The normal distribution is characterized by two parameters: the mean ($\mu$) and the standard deviation ($\sigma$). The following are the key properties of a normal density curve:
 

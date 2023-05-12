@@ -4,14 +4,16 @@ project:
 
 book:
   title: "Statistics"
-  favicon: favicon.ico
+  favicon: images/favicon.ico
   author: "Aj!"
   date: "5/8/2023"
   chapters:
     - index.qmd
-    - univariate.qmd
-    - distributions.qmd
-    - bivariate.qmd
+    - i_univariate.qmd
+    - i_distributions.qmd
+    - i_univartests.qmd
+    - i_bivariate.qmd
+    - i_references.qmd
 
 
 bibliography: references.bib
