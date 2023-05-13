@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<!-- saved from url=(0059)https://onlinestatbook.com/stat_sim/samp_dist_js/index.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+<!--    <meta name="viewport" content="minimum-scale=1.0, maximum-scale=1.0, width=device-width, user-scalable=no" /> -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Sampling Distributions</title>
+    <link rel="stylesheet" type="text/css" href="./SamplingApp.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="./Histogram.css" media="screen">
+    <script type="text/javascript" async="" src="./analytics.js.download"></script><script src="./goog.js.download"></script>
+    <script>googleTrack();</script><script async="" src="./js"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-141388-4');
+    </script>
+    <script src="./jquery-1.10.1.min.js.download"></script>
+    <script src="./Stats.js.download"></script>
+    <script src="./HistogramData.js.download"></script>
+    <script src="./Histogram.js.download"></script>
+    <script src="./AnimatedHistogram.js.download"></script>
+    <script src="./Sampling.js.download"></script>
+    <script src="./SamplingApp.js.download"></script>
+    <script src="./StatisticsFunctions.js.download"></script>
+</head>
+<body style="">
+<!-- This leftmost column displays the stats -->
+<div class="column" id="displayStatsColumn">
+    <div id="statsDisplay1">
+        <div class="blue row">
+            mean=<div class="blue right" id="mean1">16.00</div>
+        </div>
+        <div class="magenta row">
+            median=<div class="magenta right" id="median1">16.00</div>
+        </div>
+        <div class="red row">
+            sd=<div class="red right" id="sd1">5.00</div><br>
+        </div>
+        <div class="row">
+            skew=<div class="right" id="skew1">0.00</div><br>
+        </div>
+        <div class="row">
+            kurtosis=<div class="right" id="kurtosis1">0.00</div><br>
+        </div>
+    </div>
+    <!-- Stats Display for Histogram 2 -->
+    <div id="statsDisplay2" style="display: none;">
+        <div class="row">
+            Reps=<div class="right" id="reps2">0</div>
+        </div>
+        <div class="green row">
+            range=<div class="green right" id="range2">0</div>
+        </div>
+    </div>
+    <!-- Stats Display for Histogram 3 -->
+    <div id="statsDisplay3" style="display: none;">
+        <div class="row">
+            Reps=<div class="right" id="reps3">0</div>
+        </div>
+        <div class="blue row">
+            mean=<div class="blue right" id="mean3">24</div>
+        </div>
+        <div class="magenta row">
+            median=<div class="magenta right" id="median3">48</div>
+        </div>
+        <div class="red row">
+            sd=<div class="red right" id="sd3">48</div><br>
+        </div>
+        <div class="row">
+            skew=<div class="right" id="skew3">48</div><br>
+        </div>
+        <div class="row">
+            kurtosis=<div class="right" id="kurtosis3">48</div><br>
+        </div>
+    </div>
+    <!-- Stats Display for Histogram 4 -->
+    <div id="statsDisplay4" style="display: none;">
+        <div class="row">
+            Reps=<div class="right" id="reps4">0</div>
+        </div>
+        <div class="blue row">
+            mean=<div class="blue right" id="mean4">24</div>
+        </div>
+        <div class="magenta row">
+            median=<div class="magenta right" id="median4">48</div>
+        </div>
+        <div class="red row">
+            sd=<div class="red right" id="sd4">48</div><br>
+        </div>
+        <div class="row">
+            skew=<div class="right" id="skew4">48</div><br>
+        </div>
+        <div class="row">
+            kurtosis=<div class="right" id="kurtosis4">48</div><br>
+        </div>
+    </div>
+
+</div>
+<!-- The middle column contains interactive charts -->
+<div class="column" id="graphs">
+    <div id="histogram1" class="histogram"><canvas width="375" height="120" class="chart" style="z-index: 1;"></canvas><div class="absolute" style="left: 45px;">Parent population (can be changed with the mouse)</div><div class="histogram_content" style="inset: 16px 0px 16px 44px;"><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 1.1px;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 1.65px;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 1.65px;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 3.3px;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 4.4px;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 7.7px;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 10.45px;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 17.6px;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 24.75px;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 33px;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 42.9px;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 53.35px;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 63.8px;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 73.15px;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 80.85px;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 85.8px;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 88px;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 85.8px;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 80.85px;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 73.15px;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 63.8px;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 53.35px;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 42.9px;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 33px;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 24.75px;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 17.6px;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 10.45px;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 7.7px;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 4.4px;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 3.3px;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 1.65px;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 1.65px;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 1.1px;"></div></div></div></div> <!-- Parent Population -->
+    <div id="histogram2" class="histogram"><canvas width="375" height="120" class="chart" style="z-index: 1;"></canvas><div class="absolute" style="left: 45px;">Sample Data</div><div class="histogram_content" style="inset: 16px 0px 16px 44px;"><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 0px;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 0px;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 0px;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 0px;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 0px;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 0px;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 0px;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 0px;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 0px;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 0px;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 0px;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 0px;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 0px;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 0px;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 0px;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 0px;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 0px;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 0px;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 0px;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 0px;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 0px;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 0px;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 0px;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 0px;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 0px;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 0px;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 0px;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 0px;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 0px;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 0px;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 0px;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 0px;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 0px;"></div></div></div></div> <!-- Sample Data -->
+    <div id="histogram3" class="histogram"><canvas width="375" height="120" class="chart" style="z-index: 1;"></canvas><div class="absolute" style="left: 45px;">Distribution of Means, N=5</div><div class="histogram_content" style="inset: 16px 0px 16px 44px;"><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 0px; background-color: blue;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 0px; background-color: blue;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 0px; background-color: blue;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 0px; background-color: blue;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 0px; background-color: blue;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 0px; background-color: blue;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 0px; background-color: blue;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 0px; background-color: blue;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 0px; background-color: blue;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 0px; background-color: blue;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 0px; background-color: blue;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 0px; background-color: blue;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 0px; background-color: blue;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 0px; background-color: blue;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 0px; background-color: blue;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 0px; background-color: blue;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 0px; background-color: blue;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 0px; background-color: blue;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 0px; background-color: blue;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 0px; background-color: blue;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 0px; background-color: blue;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 0px; background-color: blue;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 0px; background-color: blue;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 0px; background-color: blue;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 0px; background-color: blue;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 0px; background-color: blue;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 0px; background-color: blue;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 0px; background-color: blue;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 0px; background-color: blue;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 0px; background-color: blue;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 0px; background-color: blue;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 0px; background-color: blue;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 0px; background-color: blue;"></div></div></div></div> <!-- Distribution of ... -->
+    <div id="histogram4" class="histogram"><canvas width="375" height="120" class="chart" style="z-index: 1;"></canvas><div class="absolute" style="left: 45px;"></div><div class="histogram_content" style="inset: 16px 0px 16px 44px;"><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 0px;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 0px;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 0px;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 0px;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 0px;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 0px;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 0px;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 0px;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 0px;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 0px;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 0px;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 0px;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 0px;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 0px;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 0px;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 0px;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 0px;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 0px;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 0px;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 0px;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 0px;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 0px;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 0px;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 0px;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 0px;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 0px;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 0px;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 0px;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 0px;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 0px;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 0px;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 0px;"></div></div><div class="histogram_column" style="width: 10px;"><div class="histogram_bar" style="bottom: 0px; height: 0px;"></div></div></div></div> <!-- Distribution of ... -->
+</div>
+<!-- The rightmost column, the menu -->
+<div class="column" id="menu">
+    <p>
+        <button id="resetSamples">Clear lower 3</button>
+        <select name="distribution">
+            <option>Normal</option>
+            <option>Uniform</option>
+            <option>Skewed</option>
+            <option>Custom</option>
+        </select>
+    </p>
+<!-- Menu for second histogram -->
+    <br>
+    <br>
+    <p>
+        Sample:<br>
+        <button id="sampleAnimated">Animated</button><br>
+        <button id="sample5">5</button><br>
+        <button id="sample10000">10,000</button><br>
+        <button id="sample100000">100,000</button><br>
+    </p>
+<!-- Menu for third histogram -->
+    <br>
+    <p>
+        <select id="histogram3Stat">
+            <option value="mean">Mean</option>
+            <option value="median">Median</option>
+            <option value="standardDeviation">sd</option>
+            <option value="variance">Variance</option>
+            <option value="varianceUnbiased">Var (U)</option>
+            <option value="meanAbsoluteDeviation">MAD</option>
+            <option value="range">Range</option>
+        </select><br>
+        <select id="histogram3SampleSize">
+            <option value="2">N=2</option>
+            <option value="5" selected="selected">N=5</option>
+            <option value="10">N=10</option>
+            <option value="16">N=16</option>
+            <option value="20">N=20</option>
+            <option value="25">N=25</option>
+        </select><br>
+        <input type="checkbox" id="histogram3FitNormal">Fit normal
+    </p>
+<!-- Menu for fourth histogram -->
+    <br>
+    <br>
+    <br>
+    <p>
+        <select id="histogram4Stat">
+            <option value="none">None</option>
+            <option value="mean">Mean</option>
+            <option value="median">Median</option>
+            <option value="standardDeviation">sd</option>
+            <option value="variance">Variance</option>
+            <option value="varianceUnbiased">Var (U)</option>
+            <option value="meanAbsoluteDeviation">MAD</option>
+            <option value="range">Range</option>
+        </select><br>
+        <select id="histogram4SampleSize">
+            <option value="2">N=2</option>
+            <option value="5" selected="selected">N=5</option>
+            <option value="10">N=10</option>
+            <option value="16">N=16</option>
+            <option value="20">N=20</option>
+            <option value="25">N=25</option>
+        </select><br>
+        <input type="checkbox" id="histogram4FitNormal">Fit normal
+    </p>
+</div>
+
+
+</body></html>
