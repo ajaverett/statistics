@@ -1,0 +1,1283 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.280">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Statistics - 5&nbsp; Regression Hypothesis Testing</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./i_references.html" rel="next">
+<link href="./i_bivariate.html" rel="prev">
+<link href="./images/favicon.ico" rel="icon">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<script src="site_libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
+<script src="site_libs/plotly-binding-4.10.1/plotly.js"></script>
+<script src="site_libs/typedarray-0.1/typedarray.min.js"></script>
+<script src="site_libs/jquery-3.5.1/jquery.min.js"></script>
+<link href="site_libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet">
+<script src="site_libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
+<link href="site_libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet">
+<script src="site_libs/plotly-main-2.11.1/plotly-latest.min.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Regression Hypothesis Testing</span></h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Statistics</a> 
+        <div class="sidebar-tools-main">
+  <a href="" class="quarto-color-scheme-toggle sidebar-tool" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">Statistics and Data</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./i_univariate.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Univariate Data</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./i_distributions.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Univariate Distributions</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./i_univartests.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Univariate Hypothesis Testing</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./i_bivariate.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Bivariate Data</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./i_bivartests.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Regression Hypothesis Testing</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./i_references.html" class="sidebar-item-text sidebar-link">References</a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#null-hypothesis-significance-testing" id="toc-null-hypothesis-significance-testing" class="nav-link active" data-scroll-target="#null-hypothesis-significance-testing"><span class="toc-section-number">5.1</span>  Null Hypothesis Significance Testing</a>
+  <ul class="collapse">
+  <li><a href="#the-process-of-null-hypothesis-significance-testing" id="toc-the-process-of-null-hypothesis-significance-testing" class="nav-link" data-scroll-target="#the-process-of-null-hypothesis-significance-testing"><span class="toc-section-number">5.1.1</span>  The Process of Null Hypothesis Significance Testing</a></li>
+  </ul></li>
+  <li><a href="#testing-the-intercept-and-slope" id="toc-testing-the-intercept-and-slope" class="nav-link" data-scroll-target="#testing-the-intercept-and-slope"><span class="toc-section-number">5.2</span>  Testing the Intercept and Slope</a>
+  <ul class="collapse">
+  <li><a href="#our-measly-sample" id="toc-our-measly-sample" class="nav-link" data-scroll-target="#our-measly-sample"><span class="toc-section-number">5.2.1</span>  Our Measly Sample</a></li>
+  <li><a href="#the-central-limit-theorem" id="toc-the-central-limit-theorem" class="nav-link" data-scroll-target="#the-central-limit-theorem"><span class="toc-section-number">5.2.2</span>  The Central Limit Theorem</a></li>
+  <li><a href="#estimating-the-distribution-of-sample-intercepts-under-the-null-hypothesis" id="toc-estimating-the-distribution-of-sample-intercepts-under-the-null-hypothesis" class="nav-link" data-scroll-target="#estimating-the-distribution-of-sample-intercepts-under-the-null-hypothesis"><span class="toc-section-number">5.2.3</span>  Estimating the Distribution of Sample Intercepts Under the Null Hypothesis</a></li>
+  <li><a href="#calculating-our-test-statistic-under-the-null-hypothesis" id="toc-calculating-our-test-statistic-under-the-null-hypothesis" class="nav-link" data-scroll-target="#calculating-our-test-statistic-under-the-null-hypothesis"><span class="toc-section-number">5.2.4</span>  Calculating our Test-Statistic Under the Null Hypothesis</a></li>
+  <li><a href="#calculating-our-p-value-under-the-null-hypothesis" id="toc-calculating-our-p-value-under-the-null-hypothesis" class="nav-link" data-scroll-target="#calculating-our-p-value-under-the-null-hypothesis"><span class="toc-section-number">5.2.5</span>  Calculating our P-value Under the Null Hypothesis</a></li>
+  </ul></li>
+  <li><a href="#simulating-the-nhst-process" id="toc-simulating-the-nhst-process" class="nav-link" data-scroll-target="#simulating-the-nhst-process"><span class="toc-section-number">5.3</span>  Simulating the NHST Process</a>
+  <ul class="collapse">
+  <li><a href="#parameters" id="toc-parameters" class="nav-link" data-scroll-target="#parameters"><span class="toc-section-number">5.3.1</span>  Parameters</a></li>
+  <li><a href="#step-one-state-our-pair-of-null-and-alternative-hypotheses." id="toc-step-one-state-our-pair-of-null-and-alternative-hypotheses." class="nav-link" data-scroll-target="#step-one-state-our-pair-of-null-and-alternative-hypotheses."><span class="toc-section-number">5.3.2</span>  Step One: State our pair of null and alternative hypotheses.</a></li>
+  <li><a href="#step-two-choose-a-significance-level" id="toc-step-two-choose-a-significance-level" class="nav-link" data-scroll-target="#step-two-choose-a-significance-level"><span class="toc-section-number">5.3.3</span>  Step Two: Choose a significance level</a></li>
+  <li><a href="#step-three--part-1-collect-data" id="toc-step-three--part-1-collect-data" class="nav-link" data-scroll-target="#step-three--part-1-collect-data"><span class="toc-section-number">5.3.4</span>  Step Three- Part 1: Collect data</a></li>
+  <li><a href="#step-three--part-2-calculate-the-test-statistic" id="toc-step-three--part-2-calculate-the-test-statistic" class="nav-link" data-scroll-target="#step-three--part-2-calculate-the-test-statistic"><span class="toc-section-number">5.3.5</span>  Step Three- Part 2: Calculate the test statistic</a></li>
+  <li><a href="#step-four-determine-the-p-value" id="toc-step-four-determine-the-p-value" class="nav-link" data-scroll-target="#step-four-determine-the-p-value"><span class="toc-section-number">5.3.6</span>  Step Four: Determine the p-value</a></li>
+  <li><a href="#step-five-compare-the-p-value-to-the-significance-level" id="toc-step-five-compare-the-p-value-to-the-significance-level" class="nav-link" data-scroll-target="#step-five-compare-the-p-value-to-the-significance-level"><span class="toc-section-number">5.3.7</span>  Step Five: Compare the p-value to the significance level</a></li>
+  <li><a href="#step-three-and-four-through-simulation" id="toc-step-three-and-four-through-simulation" class="nav-link" data-scroll-target="#step-three-and-four-through-simulation"><span class="toc-section-number">5.3.8</span>  Step Three and Four through simulation</a></li>
+  </ul></li>
+  <li><a href="#setting-confidence-intervals" id="toc-setting-confidence-intervals" class="nav-link" data-scroll-target="#setting-confidence-intervals"><span class="toc-section-number">5.4</span>  Setting Confidence Intervals</a>
+  <ul class="collapse">
+  <li><a href="#confidence-intervals-for-our-simulation" id="toc-confidence-intervals-for-our-simulation" class="nav-link" data-scroll-target="#confidence-intervals-for-our-simulation"><span class="toc-section-number">5.4.1</span>  Confidence Intervals for our simulation</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Regression Hypothesis Testing</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<p>Finding the least squares line for linear regression can be highly useful. Since, if in reality, there is a linear relationship between two variables that could be modeled like the formula below, we can attempt to estimate these parameters using statistics and then predict novel data.</p>
+<p><span class="math display">\[
+Y_i = \beta_0 + \beta_1 X_i + \epsilon_i \quad \text{where} \
+\epsilon_i \sim N(0, \sigma^2)
+\]</span></p>
+<p>Even though we may be able to show an estimate for <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span>, we may not know if these are significantly different than if they were the status quo (e.g.&nbsp;no relation between X and Y).</p>
+<p>For example, if we wanted to see if there is a relationship between heavy machinery factories (independent) and air pollution (dependent) in a given area, the intercept estimate (<span class="math inline">\(b_0\)</span>) would estimate air pollution with zero factories while the slope estimate (<span class="math inline">\(b_1\)</span>) would estimate the increase in air pollution for each additional factory.</p>
+<p>Hypothesis testing for the intercept would be used to see if air pollution at zero factories is significantly different than zero. Hypothesis testing for the slope would be used to see if the relationship between factories and air pollution is significantly than zero.</p>
+<section id="null-hypothesis-significance-testing" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="null-hypothesis-significance-testing"><span class="header-section-number">5.1</span> Null Hypothesis Significance Testing</h2>
+<p>The central dogma of statistics is to make estimates about the population based on samples. Null Hypothesis Significance Testing (NHST) is a widely used statistical approach for testing the validity of a claim or hypothesis about a population based on sample data. The process involves comparing the observed data to what would be expected under a null hypothesis, which usually assumes no effect or relationship between variables.</p>
+<p><strong>Null Hypothesis</strong></p>
+<p>The null hypothesis (denoted as <span class="math inline">\(H_0\)</span>) is a statement of no effect or no difference. In linear regression, it represents the default assumption like that there is no relationship between the variables under investigation or that the dependent variable is zero when the observed independent variable is zero.</p>
+<p><strong>Alternative Hypothesis</strong></p>
+<p>The alternative hypothesis (denoted as <span class="math inline">\(H_a\)</span>) is a statement that contradicts the null hypothesis. In linear regression, it represents the possibility that there is a relation between the variables like that there is a change in the dependent variable when the independent variable is observed to increase or that the dependent variable is not zero when the observed independent variable is zero.</p>
+<p><strong>Hypotheses for Simple Linear Regression</strong></p>
+<p>The pair of hypotheses stated above about the slope and intercept can be formally written as so below:</p>
+<p><span class="math display">\[
+\left.\begin{array}{ll}
+H_0: \beta_1 = 0 \\  
+H_a: \beta_1 \neq 0
+\end{array}
+\right\} \ \text{Slope Hypotheses}\\\;\\\;
+\left.\begin{array}{ll}
+H_0: \beta_0 = 0 \\  
+H_a: \beta_0 \neq 0
+\end{array}
+\right\} \ \text{Intercept Hypotheses}
+\]</span></p>
+<section id="the-process-of-null-hypothesis-significance-testing" class="level3" data-number="5.1.1">
+<h3 data-number="5.1.1" class="anchored" data-anchor-id="the-process-of-null-hypothesis-significance-testing"><span class="header-section-number">5.1.1</span> The Process of Null Hypothesis Significance Testing</h3>
+<ol type="1">
+<li><p>State the <strong>null hypothesis</strong> (<span class="math inline">\(H_0\)</span>) and <strong>alternative hypothesis</strong> (<span class="math inline">\(H_a\)</span>). Since there are two estimated parameters, two pairs of hypotheses are made.</p></li>
+<li><p>Choose a <strong>significance level</strong>. The significance level, denoted by <span class="math inline">\(\alpha\)</span>, is the probability of rejecting the null hypothesis when it is true. The most commonly used significance level is 0.05</p></li>
+<li><p>Collect data and calculate the <strong>test statistic</strong>. Gather your sample data and perform the appropriate statistical test to calculate the test statistic. The test statistic is a numerical value that measures the difference between the observed data and what would be expected under the null hypothesis. The Central Limit Theorem says that the distribution of sample estimates for <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> will be normally distributed. Since the variance for this distribution is uncertain, we use a t-test and thus a t-statistic for each hypothesis.</p></li>
+<li><p>Determine the <strong>p-value</strong>. The p-value, denoted as <span class="math inline">\(p\)</span>, is the probability of observing a test statistic as extreme or more extreme than the one calculated from the sample data, assuming the null hypothesis is true. It quantifies the evidence against the null hypothesis. Lower p-values indicate stronger evidence against the null hypothesis since they imply that the observed results are less likely to have occurred by chance alone under the null hypothesis. In other words, a smaller p-value suggests that the observed effect or relationship between the variables is more likely to be genuine and not just a random occurrence. Conversely, higher p-values indicate weaker evidence against the null hypothesis. This means that the observed results are more likely to have occurred by chance under the null hypothesis, and there is insufficient evidence to suggest that the effect or relationship is genuine.</p></li>
+<li><p>Compare the p-value to the significance level (<span class="math inline">\(\alpha\)</span>). If the p-value is less than or equal to the chosen significance level (<span class="math inline">\(p \leq \alpha\)</span>), then reject the null hypothesis in favor of the alternative hypothesis. This implies that there is statistically significant evidence to support the claim made by the alternative hypothesis. If the p-value is greater than the significance level (<span class="math inline">\(p &gt; \alpha\)</span>), then do not reject the null hypothesis, as there is not enough evidence to support the alternative hypothesis</p></li>
+</ol>
+</section>
+</section>
+<section id="testing-the-intercept-and-slope" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="testing-the-intercept-and-slope"><span class="header-section-number">5.2</span> Testing the Intercept and Slope</h2>
+<p>Below is a sample of 32 cars from the early 20th century. Each point represents a car where the X axis shows the independent variable (car weight) and the Y axis shows gross horsepower.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(plotly)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>(<span class="fu">ggplot</span>(mtcars, <span class="fu">aes</span>(<span class="at">x =</span> wt, <span class="at">y =</span> hp)) <span class="sc">+</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">'darkblue'</span>,</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>               <span class="at">fill=</span><span class="st">'lightblue'</span>,</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>               <span class="at">size=</span><span class="fl">2.5</span>,</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>               <span class="at">shape=</span><span class="dv">21</span>,</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>               <span class="at">alpha=</span>.<span class="dv">9</span>) <span class="sc">+</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) </span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplotly</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="plotly html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-60e9e207c19d65b8d8c6" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-60e9e207c19d65b8d8c6">{"x":{"data":[{"x":[2.62,2.875,2.32,3.215,3.44,3.46,3.57,3.19,3.15,3.44,3.44,4.07,3.73,3.78,5.25,5.424,5.345,2.2,1.615,1.835,2.465,3.52,3.435,3.84,3.845,1.935,2.14,1.513,3.17,2.77,3.57,2.78],"y":[110,110,93,110,175,105,245,62,95,123,123,180,180,180,205,215,230,66,52,65,97,150,150,245,175,66,91,113,264,175,335,109],"text":["wt: 2.620<br />hp: 110","wt: 2.875<br />hp: 110","wt: 2.320<br />hp:  93","wt: 3.215<br />hp: 110","wt: 3.440<br />hp: 175","wt: 3.460<br />hp: 105","wt: 3.570<br />hp: 245","wt: 3.190<br />hp:  62","wt: 3.150<br />hp:  95","wt: 3.440<br />hp: 123","wt: 3.440<br />hp: 123","wt: 4.070<br />hp: 180","wt: 3.730<br />hp: 180","wt: 3.780<br />hp: 180","wt: 5.250<br />hp: 205","wt: 5.424<br />hp: 215","wt: 5.345<br />hp: 230","wt: 2.200<br />hp:  66","wt: 1.615<br />hp:  52","wt: 1.835<br />hp:  65","wt: 2.465<br />hp:  97","wt: 3.520<br />hp: 150","wt: 3.435<br />hp: 150","wt: 3.840<br />hp: 245","wt: 3.845<br />hp: 175","wt: 1.935<br />hp:  66","wt: 2.140<br />hp:  91","wt: 1.513<br />hp: 113","wt: 3.170<br />hp: 264","wt: 2.770<br />hp: 175","wt: 3.570<br />hp: 335","wt: 2.780<br />hp: 109"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(173,216,230,1)","opacity":0.9,"size":9.4488188976378,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(0,0,139,1)"}},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[1.513,1.56250632911392,1.61201265822785,1.66151898734177,1.7110253164557,1.76053164556962,1.81003797468354,1.85954430379747,1.90905063291139,1.95855696202532,2.00806329113924,2.05756962025316,2.10707594936709,2.15658227848101,2.20608860759494,2.25559493670886,2.30510126582278,2.35460759493671,2.40411392405063,2.45362025316456,2.50312658227848,2.55263291139241,2.60213924050633,2.65164556962025,2.70115189873418,2.7506582278481,2.80016455696203,2.84967088607595,2.89917721518987,2.9486835443038,2.99818987341772,3.04769620253165,3.09720253164557,3.14670886075949,3.19621518987342,3.24572151898734,3.29522784810127,3.34473417721519,3.39424050632911,3.44374683544304,3.49325316455696,3.54275949367089,3.59226582278481,3.64177215189873,3.69127848101266,3.74078481012658,3.79029113924051,3.83979746835443,3.88930379746835,3.93881012658228,3.9883164556962,4.03782278481013,4.08732911392405,4.13683544303798,4.1863417721519,4.23584810126582,4.28535443037975,4.33486075949367,4.3843670886076,4.43387341772152,4.48337974683544,4.53288607594937,4.58239240506329,4.63189873417722,4.68140506329114,4.73091139240506,4.78041772151899,4.82992405063291,4.87943037974684,4.92893670886076,4.97844303797468,5.02794936708861,5.07745569620253,5.12696202531646,5.17646835443038,5.2259746835443,5.27548101265823,5.32498734177215,5.37449367088608,5.424],"y":[68.0192343061439,70.3044489473419,72.5896635885399,74.8748782297379,77.1600928709359,79.4453075121338,81.7305221533318,84.0157367945298,86.3009514357278,88.5861660769258,90.8713807181237,93.1565953593217,95.4418100005197,97.7270246417177,100.012239282916,102.297453924114,104.582668565312,106.86788320651,109.153097847708,111.438312488906,113.723527130104,116.008741771302,118.2939564125,120.579171053698,122.864385694895,125.149600336093,127.434814977291,129.720029618489,132.005244259687,134.290458900885,136.575673542083,138.860888183281,141.146102824479,143.431317465677,145.716532106875,148.001746748073,150.286961389271,152.572176030469,154.857390671667,157.142605312865,159.427819954063,161.713034595261,163.998249236459,166.283463877657,168.568678518855,170.853893160053,173.139107801251,175.424322442449,177.709537083647,179.994751724845,182.279966366043,184.565181007241,186.850395648439,189.135610289637,191.420824930835,193.706039572033,195.991254213231,198.276468854429,200.561683495627,202.846898136825,205.132112778023,207.417327419221,209.702542060419,211.987756701617,214.272971342815,216.558185984013,218.843400625211,221.128615266409,223.413829907607,225.699044548805,227.984259190003,230.269473831201,232.554688472399,234.839903113597,237.125117754795,239.410332395993,241.695547037191,243.980761678389,246.265976319587,248.551190960785],"text":["wt: 1.513000<br />hp:  68.01923","wt: 1.562506<br />hp:  70.30445","wt: 1.612013<br />hp:  72.58966","wt: 1.661519<br />hp:  74.87488","wt: 1.711025<br />hp:  77.16009","wt: 1.760532<br />hp:  79.44531","wt: 1.810038<br />hp:  81.73052","wt: 1.859544<br />hp:  84.01574","wt: 1.909051<br />hp:  86.30095","wt: 1.958557<br />hp:  88.58617","wt: 2.008063<br />hp:  90.87138","wt: 2.057570<br />hp:  93.15660","wt: 2.107076<br />hp:  95.44181","wt: 2.156582<br />hp:  97.72702","wt: 2.206089<br />hp: 100.01224","wt: 2.255595<br />hp: 102.29745","wt: 2.305101<br />hp: 104.58267","wt: 2.354608<br />hp: 106.86788","wt: 2.404114<br />hp: 109.15310","wt: 2.453620<br />hp: 111.43831","wt: 2.503127<br />hp: 113.72353","wt: 2.552633<br />hp: 116.00874","wt: 2.602139<br />hp: 118.29396","wt: 2.651646<br />hp: 120.57917","wt: 2.701152<br />hp: 122.86439","wt: 2.750658<br />hp: 125.14960","wt: 2.800165<br />hp: 127.43481","wt: 2.849671<br />hp: 129.72003","wt: 2.899177<br />hp: 132.00524","wt: 2.948684<br />hp: 134.29046","wt: 2.998190<br />hp: 136.57567","wt: 3.047696<br />hp: 138.86089","wt: 3.097203<br />hp: 141.14610","wt: 3.146709<br />hp: 143.43132","wt: 3.196215<br />hp: 145.71653","wt: 3.245722<br />hp: 148.00175","wt: 3.295228<br />hp: 150.28696","wt: 3.344734<br />hp: 152.57218","wt: 3.394241<br />hp: 154.85739","wt: 3.443747<br />hp: 157.14261","wt: 3.493253<br />hp: 159.42782","wt: 3.542759<br />hp: 161.71303","wt: 3.592266<br />hp: 163.99825","wt: 3.641772<br />hp: 166.28346","wt: 3.691278<br />hp: 168.56868","wt: 3.740785<br />hp: 170.85389","wt: 3.790291<br />hp: 173.13911","wt: 3.839797<br />hp: 175.42432","wt: 3.889304<br />hp: 177.70954","wt: 3.938810<br />hp: 179.99475","wt: 3.988316<br />hp: 182.27997","wt: 4.037823<br />hp: 184.56518","wt: 4.087329<br />hp: 186.85040","wt: 4.136835<br />hp: 189.13561","wt: 4.186342<br />hp: 191.42082","wt: 4.235848<br />hp: 193.70604","wt: 4.285354<br />hp: 195.99125","wt: 4.334861<br />hp: 198.27647","wt: 4.384367<br />hp: 200.56168","wt: 4.433873<br />hp: 202.84690","wt: 4.483380<br />hp: 205.13211","wt: 4.532886<br />hp: 207.41733","wt: 4.582392<br />hp: 209.70254","wt: 4.631899<br />hp: 211.98776","wt: 4.681405<br />hp: 214.27297","wt: 4.730911<br />hp: 216.55819","wt: 4.780418<br />hp: 218.84340","wt: 4.829924<br />hp: 221.12862","wt: 4.879430<br />hp: 223.41383","wt: 4.928937<br />hp: 225.69904","wt: 4.978443<br />hp: 227.98426","wt: 5.027949<br />hp: 230.26947","wt: 5.077456<br />hp: 232.55469","wt: 5.126962<br />hp: 234.83990","wt: 5.176468<br />hp: 237.12512","wt: 5.225975<br />hp: 239.41033","wt: 5.275481<br />hp: 241.69555","wt: 5.324987<br />hp: 243.98076","wt: 5.374494<br />hp: 246.26598","wt: 5.424000<br />hp: 248.55119"],"type":"scatter","mode":"lines","name":"fitted values","line":{"width":3.77952755905512,"color":"rgba(51,102,255,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":26.2283105022831,"r":7.30593607305936,"b":40.1826484018265,"l":43.1050228310502},"plot_bgcolor":"rgba(255,255,255,1)","paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[1.31745,5.61955],"tickmode":"array","ticktext":["2","3","4","5"],"tickvals":[2,3,4,5],"categoryorder":"array","categoryarray":["2","3","4","5"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":true,"linecolor":"rgba(0,0,0,1)","linewidth":0.66417600664176,"showgrid":false,"gridcolor":null,"gridwidth":0,"zeroline":false,"anchor":"y","title":{"text":"wt","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187}},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[37.85,349.15],"tickmode":"array","ticktext":["100","200","300"],"tickvals":[100,200,300],"categoryorder":"array","categoryarray":["100","200","300"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":true,"linecolor":"rgba(0,0,0,1)","linewidth":0.66417600664176,"showgrid":false,"gridcolor":null,"gridwidth":0,"zeroline":false,"anchor":"x","title":{"text":"hp","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187}},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":false,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":1.88976377952756,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.689497716895}},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"source":"A","attrs":{"4ecc166b3ad3":{"x":{},"y":{},"type":"scatter"},"4ecc247228ed":{"x":{},"y":{}}},"cur_data":"4ecc166b3ad3","visdat":{"4ecc166b3ad3":["function (y) ","x"],"4ecc247228ed":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<section id="our-measly-sample" class="level3" data-number="5.2.1">
+<h3 data-number="5.2.1" class="anchored" data-anchor-id="our-measly-sample"><span class="header-section-number">5.2.1</span> Our Measly Sample</h3>
+<p>There are more than 32 cars out there in the world. See below; our sample of 32 cars happens to show the Y-intercept being -1.821 when we try to model weight and horsepower and an increase of 46.16 horsepower for every increase of 1000 pounds. Suppose we sampled a different set of cars and found that the intercept was actually 5 horsepower for a 0 pound car… or -3 horsepower… or 100 horsepower for a zero pound car. Similarly, for the slope, maybe if we drew another sample of cars- we would get a different slope. We could get a nearly endless amount of combinations depending on what our sample was.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(hp<span class="sc">~</span>wt, <span class="at">data=</span>mtcars) <span class="sc">%&gt;%</span> pander<span class="sc">::</span><span class="fu">pander</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<caption>Fitting linear model: hp ~ wt</caption>
+<colgroup>
+<col style="width: 25%">
+<col style="width: 15%">
+<col style="width: 18%">
+<col style="width: 15%">
+<col style="width: 16%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">&nbsp;</th>
+<th style="text-align: center;">Estimate</th>
+<th style="text-align: center;">Std. Error</th>
+<th style="text-align: center;">t value</th>
+<th style="text-align: center;">Pr(&gt;|t|)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><strong>(Intercept)</strong></td>
+<td style="text-align: center;">-1.821</td>
+<td style="text-align: center;">32.32</td>
+<td style="text-align: center;">-0.05633</td>
+<td style="text-align: center;">0.9555</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>wt</strong></td>
+<td style="text-align: center;">46.16</td>
+<td style="text-align: center;">9.625</td>
+<td style="text-align: center;">4.796</td>
+<td style="text-align: center;">4.146e-05</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>What would happen if we kept collecting samples from cars and checking each sample’s Y-intercept and slope? We would get a distribution of samples.</p>
+<p><strong>A sampling distribution</strong></p>
+<p>The sampling distribution of the y-intercept (<span class="math inline">\(b_0\)</span>) would be the collection of all possible estimates of the y-intercept obtained from different samples of the same population. Similarly, the sampling distribution of the slope (<span class="math inline">\(b_1\)</span>) would be the collection of all possible estimates of the slope obtained from different samples of the same population.</p>
+</section>
+<section id="the-central-limit-theorem" class="level3" data-number="5.2.2">
+<h3 data-number="5.2.2" class="anchored" data-anchor-id="the-central-limit-theorem"><span class="header-section-number">5.2.2</span> The Central Limit Theorem</h3>
+<p>In the above section, we mentioned the existence of a sampling distribution for each estimated parameter. The Central Limit Theorem (CLT) is a fundamental concept in probability and statistics that states that, given a large enough sample size, the distribution of the sample parameter, in this case, potential Y-intercepts or slopes of a random variable will approach a normal distribution, regardless of the shape of the underlying population distribution. This theorem is crucial because many statistical methods, including linear regression, rely on the assumption that the data are normally distributed.</p>
+<p><strong>Y-intercept (<span class="math inline">\(\beta_0\)</span>)</strong></p>
+<p>The sampling distribution of the y-intercept (<span class="math inline">\(\beta_0\)</span>) is the collection of all possible estimates of the y-intercept estimates (<span class="math inline">\(b_0\)</span>) obtained from different samples of the same population. It centers around the unknown true Y intercept parameter and has an unknown spread. It describes the probability distribution of the estimates.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/beta0s.png" class="img-fluid figure-img" width="400"></p>
+</figure>
+</div>
+<p><strong>Slope (<span class="math inline">\(\beta_1\)</span>)</strong></p>
+<p>The sampling distribution of the slopes (<span class="math inline">\(\beta_1\)</span>) is the collection of all possible estimates of the slope estimates (<span class="math inline">\(b_0\)</span>) obtained from different samples of the same population. It centers around the unknown true slope parameter and has an unknown spread. It describes the probability distribution of the estimates. It describes the probability distribution of the estimates and provides insight into the variability of the estimates.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/beta1s.png" class="img-fluid figure-img" width="400"></p>
+</figure>
+</div>
+<p><strong>Visualizing the Central Limit Theorem</strong></p>
+<p>Below is an applet that allows you to draw a parent population distribution and see what different</p>
+<center>
+<div width="100%">
+<iframe src="https://ajaverett.github.io/data/index.html?width=800&amp;z=1&amp;height=500&amp;left=1&amp;mid=0&amp;right=1&amp;area=a&amp;static=0&amp;title=1&amp;border=0" frameborder="0" width="850" height="550" data-external="1" "=""></iframe>
+</div>
+</center>
+</section>
+<section id="estimating-the-distribution-of-sample-intercepts-under-the-null-hypothesis" class="level3" data-number="5.2.3">
+<h3 data-number="5.2.3" class="anchored" data-anchor-id="estimating-the-distribution-of-sample-intercepts-under-the-null-hypothesis"><span class="header-section-number">5.2.3</span> Estimating the Distribution of Sample Intercepts Under the Null Hypothesis</h3>
+<p><strong>Y-intercept (<span class="math inline">\(\beta_0\)</span>)</strong></p>
+<p>Under the null hypothesis, we would assume the null hypothesis is <span class="math inline">\(H_0:\beta_0\)</span>. What we don’t know is <span class="math inline">\(\sigma_{\beta_0}\)</span>. We can estimate this parameter with <span class="math inline">\(s_{b_0}\)</span>.</p>
+<p><span class="math display">\[
+\begin{align*}
+s_{b_0} &amp;= \sqrt{\text{MSE} \left(\frac{1}{n} + \frac{\bar{X}^2}{\text{SSTO}(X)}\right)}\\
+&amp;=\sqrt{\left(\frac{\text{MSE}}{n}\right) +\left(\frac{\text{MSE}}{\text{SSTO}(X)}\bar{X}\right)}\\
+\end{align*}
+\]</span></p>
+<p>Additionally, this formula can be thought of as so:</p>
+<p><span class="math inline">\(s_{b_0}\)</span> = <span class="math inline">\(\sqrt{} (\)</span> Constant variation <span class="math inline">\(+\)</span> Variation caused since data is centered away from the intercept.<span class="math inline">\()\)</span></p>
+<p>Conceptually, the formula above computes the standard error of the estimated intercept (<span class="math inline">\(\beta_{0}\)</span>), which measures the uncertainty or variability associated with the intercept estimate. In other words, it quantifies how precise the estimate is and how much it is expected to vary from one sample to another.</p>
+<ul>
+<li><p><span class="math inline">\(\text{MSE}\)</span>: also called <span class="math inline">\(\sigma^2\)</span>. This term represents the variance of the residuals (estimated errors) in the regression model. It reflects the degree of dispersion in the observed values around the predicted values. When you multiply with the rest of the formula, you are essentially scaling the standard error of the intercept according to the overall uncertainty or variability in the model’s predictions. A larger variance in residuals (<span class="math inline">\(\text{MSE}\)</span>) will result in a larger standard error for the intercept, indicating a higher degree of uncertainty in the intercept estimate.</p></li>
+<li><p><span class="math inline">\(n\)</span>: This is the number of observations in the dataset.</p></li>
+<li><p><span class="math inline">\(\frac{1}{n}\)</span> This term reflects the effect of sample size on the precision of the estimated intercept. As the sample size (<span class="math inline">\(n\)</span>) increases, the standard error of the intercept will generally decrease, which means that the intercept estimate becomes more precise with more observations.</p></li>
+<li><p><span class="math inline">\(\bar{X}\)</span>: This is the mean of the predictor (independent) variable values.</p></li>
+<li><p><span class="math inline">\(\text{SSTO}(X)\)</span>: This is the sum of the squared differences between each predictor variable value (<span class="math inline">\(X_i\)</span>) and the mean predictor variable value (̄<span class="math inline">\(\bar{X}\)</span>).It can also be written as so: <span class="math inline">\(\sum_{i=1}^{n}{\left(X_i - \bar{X}\right)^2}\)</span> Geometrically, this term represents the sum of the squared horizontal distances between each data point and the vertical line that passes through the mean of the predictor variable values.</p></li>
+<li><p><span class="math inline">\(\frac{\bar{X}^2}{\text{SSTO}(X)}\)</span> This term captures the influence of the distribution of the predictor variable values on the precision of the estimated intercept. The denominator (<span class="math inline">\(\text{SSTO}(X)\)</span>) measures the spread of the predictor variable values around their mean (<span class="math inline">\(\bar{X}\)</span>̄). A larger spread in the predictor variable values will generally result in a smaller standard error for the intercept, assuming that the variance of the residuals (<span class="math inline">\(\sigma^2\)</span>) remains constant.</p></li>
+</ul>
+<p>Since we have our <span class="math inline">\(\beta_0\)</span> and our <span class="math inline">\(s_{b_0}\)</span>, we can estimate the sampling distribution. We will use a t-distribution with <span class="math inline">\(n-2\)</span> degrees of freedom since the spread is estimated:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/beta0s_estimate.png" class="img-fluid figure-img" width="400"></p>
+</figure>
+</div>
+<p><strong>Slope (<span class="math inline">\(\beta_1\)</span>)</strong></p>
+<p>Under the null hypothesis, we would assume the null hypothesis is <span class="math inline">\(H_0:\beta_1\)</span>. What we don’t know is <span class="math inline">\(\sigma_{\beta_1}\)</span>. We can estimate this parameter with <span class="math inline">\(s_{b_1}\)</span>.</p>
+<p><span class="math display">\[
+\begin{align*}
+s_{b_1} &amp;= \sqrt{\frac{MSE}{\text{SSTO}(X)}}\\
+&amp;= \sqrt{\frac{MSE}{\sum(X_i-\bar{X})^2}}\\
+\end{align*}
+\]</span></p>
+<ul>
+<li><p><span class="math inline">\(\text{MSE}\)</span>: also called <span class="math inline">\(\sigma^2\)</span>. This term represents the variance of the residuals (estimated errors) in the regression model. It reflects the degree of dispersion in the observed values around the predicted values. A larger variance in residuals (<span class="math inline">\(\text{MSE}\)</span>) will result in a larger standard error for the intercept, indicating a higher degree of uncertainty in the intercept estimate.</p></li>
+<li><p><span class="math inline">\(\text{SSTO}(X)\)</span>: This is the sum of the squared differences between each predictor variable value (<span class="math inline">\(X_i\)</span>) and the mean predictor variable value (̄<span class="math inline">\(\bar{X}\)</span>).It can also be written as so: <span class="math inline">\(\sum_{i=1}^{n}{\left(X_i - \bar{X}\right)^2}\)</span> Geometrically, this term represents the sum of the squared horizontal distances between each data point and the vertical line that passes through the mean of the predictor variable values.</p></li>
+</ul>
+<p>This formula gets the square root of the ratio of the squared residuals and the total sum of squares. Since we have our <span class="math inline">\(\beta_1\)</span> and our <span class="math inline">\(s_{b_1}\)</span>, we can estimate the sampling distribution. We will use a t-distribution with <span class="math inline">\(n-2\)</span> degrees of freedom since the spread is estimated:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/beta1s_estimate.png" class="img-fluid figure-img" width="400"></p>
+</figure>
+</div>
+</section>
+<section id="calculating-our-test-statistic-under-the-null-hypothesis" class="level3" data-number="5.2.4">
+<h3 data-number="5.2.4" class="anchored" data-anchor-id="calculating-our-test-statistic-under-the-null-hypothesis"><span class="header-section-number">5.2.4</span> Calculating our Test-Statistic Under the Null Hypothesis</h3>
+<p><strong>Y-intercept (<span class="math inline">\(\beta_0\)</span>)</strong></p>
+<p>This is the formula for the test statistic for <span class="math inline">\(\beta_0\)</span>. It measures how far the estimated Y-intercept <span class="math inline">\(b_0\)</span> is from the null hypothesis for <span class="math inline">\(\beta_0\)</span> in units of standard errors (<span class="math inline">\(s_{b_0}\)</span>) of <span class="math inline">\(b_0\)</span>- thus the division by <span class="math inline">\(s_{b_0}\)</span>. Though the hypothesized value of <span class="math inline">\(\beta_0\)</span> is typically 0, it could be any number.</p>
+<p><span class="math display">\[
+t = \frac{b_0 - (H_0:\beta_0)}{s_{b_0}}
+\]</span></p>
+<p><strong>Slope (<span class="math inline">\(\beta_1\)</span>)</strong></p>
+<p>This is the formula for the test statistic for <span class="math inline">\(\beta_1\)</span>. It measures how far the estimated slope <span class="math inline">\(b_1\)</span> is from the null hypothesis for <span class="math inline">\(\beta_1\)</span> in units of standard errors (<span class="math inline">\(s_{b_1}\)</span>) of <span class="math inline">\(b_1\)</span>- thus the division by <span class="math inline">\(s_{b_1}\)</span>. Though the hypothesized value of <span class="math inline">\(\beta_0\)</span> is typically 0 (no relationship), it could be any number.</p>
+<p><span class="math display">\[
+t = \frac{b_1 - (H_:\beta_1)}{s_{b_1}}
+\]</span></p>
+</section>
+<section id="calculating-our-p-value-under-the-null-hypothesis" class="level3" data-number="5.2.5">
+<h3 data-number="5.2.5" class="anchored" data-anchor-id="calculating-our-p-value-under-the-null-hypothesis"><span class="header-section-number">5.2.5</span> Calculating our P-value Under the Null Hypothesis</h3>
+<p>The p-value is the probability of obtaining a test statistic as extreme or more extreme than the observed value, assuming the null hypothesis is true. We can mathematically calculate this by using the t-distribution</p>
+<p><strong>Y-intercept (<span class="math inline">\(\beta_0\)</span>)</strong></p>
+<p><span class="math display">\[
+\text{p-value} =
+\begin{cases}
+2 \int_{-\infty}^{-|t|} t_{n-2}(\beta_0, s_{b_0}) \, dt &amp;\text{for two-tailed}\\
+\int_{-\infty}^{-|t|} t_{n-2}(\beta_0, s_{b_0}) \, dt &amp;\text{for left-tailed}\\
+\int_{|t|}^{\infty} t_{n-2}(\beta_0, s_{b_0}) \, dt &amp;\text{for right-tailed}
+\end{cases}
+\]</span></p>
+<p><strong>Slope (<span class="math inline">\(\beta_1\)</span>)</strong></p>
+<p><span class="math display">\[
+\text{p-value} =
+\begin{cases}
+2 \int_{-\infty}^{-|t|} t_{n-2}(\beta_1, s_{b_0}) \, dt &amp;\text{for two-tailed}\\
+\int_{-\infty}^{-|t|} t_{n-2}(\beta_1, s_{b_0}) \, dt &amp;\text{for left-tailed}\\
+\int_{|t|}^{\infty} t_{n-2}(\beta_1, s_{b_0}) \, dt &amp;\text{for right-tailed}
+\end{cases}
+\]</span></p>
+<p>Where <span class="math inline">\(t\)</span> is the t-statistic from the sample and <span class="math inline">\(t_{n-2}\)</span> is the t-distribution with <span class="math inline">\(n-2\)</span> degrees of freedom with a mean of <span class="math inline">\(H_0:\beta_0\)</span> or <span class="math inline">\(H_0:\beta_1\)</span> and a standard deviation of <span class="math inline">\(s_{b_0}\)</span> or <span class="math inline">\(s_{b_1}\)</span>. This can be illustrated below.</p>
+<center>
+<div width="90%">
+<iframe src="https://byuimath.com/apps/normprobwitht.html?width=600&amp;z=1&amp;height=400&amp;left=1&amp;mid=0&amp;right=1&amp;area=a&amp;static=0&amp;title=1&amp;border=0" frameborder="0" width="650" height="450" data-external="1"></iframe>
+</div>
+</center>
+</section>
+</section>
+<section id="simulating-the-nhst-process" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="simulating-the-nhst-process"><span class="header-section-number">5.3</span> Simulating the NHST Process</h2>
+<p>Below we set up hypothetical population parameters.</p>
+<section id="parameters" class="level3" data-number="5.3.1">
+<h3 data-number="5.3.1" class="anchored" data-anchor-id="parameters"><span class="header-section-number">5.3.1</span> Parameters</h3>
+<p><strong>Population parameters</strong></p>
+<ul>
+<li><span class="math inline">\(X \sim \mathcal{N}(70, 3)\)</span>. This will represent height of men.</li>
+<li><span class="math inline">\(\beta_0 = -179\)</span>. This would represent the weight of a person who is 0 inches tall.</li>
+<li><span class="math inline">\(\beta_1 = 5.3\)</span>. This represents how much additional weight someone will be when they are 1 inch taller.</li>
+<li><span class="math inline">\(\sigma = 38\)</span>. This represents the variance of the data around the true line.</li>
+</ul>
+<p><strong>Simulation variables</strong></p>
+<ul>
+<li><span class="math inline">\(N = 700\)</span>. This represents that we are taking 700 simple random samples from the population.</li>
+<li><span class="math inline">\(n = 100\)</span>. This represents that for every sample, we are observing 100 people.</li>
+</ul>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">=</span> <span class="dv">100</span>         <span class="co">#sample size</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>beta_0 <span class="ot">=</span> <span class="sc">-</span><span class="dv">179</span>   <span class="co">#true y-intercept</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>beta_1 <span class="ot">=</span> <span class="fl">5.3</span>    <span class="co">#true slope</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>sigma <span class="ot">=</span> <span class="dv">38</span>      <span class="co">#choice of st. deviation of error terms</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>X <span class="ot">=</span> <span class="fu">rnorm</span>(n, <span class="at">mean =</span> <span class="dv">70</span>, <span class="at">sd =</span> <span class="dv">3</span>)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>N <span class="ot">&lt;-</span> <span class="dv">1000</span> <span class="co">#number of samples in our sampling distribution</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="step-one-state-our-pair-of-null-and-alternative-hypotheses." class="level3" data-number="5.3.2">
+<h3 data-number="5.3.2" class="anchored" data-anchor-id="step-one-state-our-pair-of-null-and-alternative-hypotheses."><span class="header-section-number">5.3.2</span> Step One: State our pair of null and alternative hypotheses.</h3>
+<p>We are going under the assumption we do not know the population parameters. Because of this, we are going to formulate hypotheses about the relationship between height (our independent variable) and weight (our dependent variable). The first pair of hypotheses state that when American male height is 0, weight should be 0 as well- The second pair of hypotheses state that when American male height increases by 1 inch, there is no increase in weight.</p>
+<p><span class="math display">\[
+\left.\begin{array}{ll}
+H_0: \beta_1 = 0 \\  
+H_a: \beta_1 \neq 0
+\end{array}
+\right\} \ \text{Slope Hypotheses}\\\;\\\;
+\left.\begin{array}{ll}
+H_0: \beta_0 = 0 \\  
+H_a: \beta_0 \neq 0
+\end{array}
+\right\} \ \text{Intercept Hypotheses}
+\]</span></p>
+</section>
+<section id="step-two-choose-a-significance-level" class="level3" data-number="5.3.3">
+<h3 data-number="5.3.3" class="anchored" data-anchor-id="step-two-choose-a-significance-level"><span class="header-section-number">5.3.3</span> Step Two: Choose a significance level</h3>
+<p>We are going to go with the traditional <span class="math inline">\(\alpha = 0.05\)</span>.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>alpha <span class="ot">=</span> <span class="fl">0.05</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="step-three--part-1-collect-data" class="level3" data-number="5.3.4">
+<h3 data-number="5.3.4" class="anchored" data-anchor-id="step-three--part-1-collect-data"><span class="header-section-number">5.3.4</span> Step Three- Part 1: Collect data</h3>
+<p>For this mock study, we are going to “measure” the heights and weights of 100 random men in the United States.</p>
+<p><strong>First few rows of the mock sample data</strong></p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>X_sample <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, <span class="at">mean =</span> <span class="dv">70</span>, <span class="at">sd =</span> <span class="dv">3</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>Y_sample <span class="ot">&lt;-</span> beta_0 <span class="sc">+</span> beta_1<span class="sc">*</span>X_sample <span class="sc">+</span> <span class="fu">rnorm</span>(n, <span class="dv">0</span>, sigma)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>sample <span class="ot">=</span> <span class="fu">tibble</span>(X_sample, Y_sample)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>sample <span class="sc">%&gt;%</span> <span class="fu">head</span>() <span class="sc">%&gt;%</span> pander<span class="sc">::</span><span class="fu">pander</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<colgroup>
+<col style="width: 15%">
+<col style="width: 15%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">X_sample</th>
+<th style="text-align: center;">Y_sample</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">69.44</td>
+<td style="text-align: center;">217.9</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">69.83</td>
+<td style="text-align: center;">139.1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">68</td>
+<td style="text-align: center;">146.6</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">70.71</td>
+<td style="text-align: center;">170.4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">66.45</td>
+<td style="text-align: center;">153.9</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">72.86</td>
+<td style="text-align: center;">145.8</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><strong>The mock sample data</strong></p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>(<span class="fu">ggplot</span>(sample, <span class="fu">aes</span>(X_sample,Y_sample)) <span class="sc">+</span> </span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">'darkblue'</span>,</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">fill=</span><span class="st">'lightblue'</span>,</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">size=</span><span class="fl">2.5</span>,</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">shape=</span><span class="dv">21</span>,</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>               <span class="at">alpha=</span>.<span class="dv">9</span>) <span class="sc">+</span> </span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">se=</span>F, <span class="at">method =</span> <span class="st">'lm'</span>) <span class="sc">+</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Sample Height"</span>,</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Sample Weight"</span>,</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Weight by height among American men"</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>  )) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplotly</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="plotly html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-3d44de41497994d79c2d" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-3d44de41497994d79c2d">{"x":{"data":[{"x":[69.4446612136554,69.8328642362386,68.0049994851311,70.7131877032916,66.4523265154705,72.8613451131251,68.3890581457701,72.4854423806843,70.8705410579954,71.9130121748337,71.9885039480632,67.8770822735387,67.7959324519733,64.1485859853066,67.3118316660307,74.416526393176,69.8011003750784,71.4348576901931,69.0505604903403,72.8006542773743,72.6445384973188,70.8153537557876,71.2360912078707,69.8422867487171,71.9826052099808,72.9417225894741,64.5731223393573,68.7768375220804,66.9621782742175,65.9579340431661,72.5346846650791,69.188880555977,67.3312791771068,67.6451328590944,69.6830333122685,72.0024231284133,71.9401777434941,70.2443504905446,67.6346881106753,74.2730460910092,64.9387521193409,69.5869302135092,78.035781539814,75.5253010798132,72.2122977778274,73.5322705141508,69.7762024549606,66.242121738854,63.6263025445581,64.7383225005326,71.0649041826501,69.9599866818578,64.2897565355155,68.3174873079714,68.556757098583,67.2703984147409,69.8166612622557,66.5058708605486,69.2109016540903,73.0795087277521,71.3538141100202,68.4414201149857,68.2786514110215,70.2576771253423,67.1927840884285,72.4024673408945,67.5531503844445,68.6334273056898,69.6731070368832,72.7468820619694,69.7653104362488,74.8627264516173,71.4647813955836,70.3880231972833,70.0277299524718,73.0143823370816,69.5742165540349,70.7767914714834,70.1500365546573,76.9327829468981,68.3775585147754,67.3083884759943,69.0488154738987,71.3354594205786,66.8183067255272,67.7730336279587,68.6951455589374,73.0294344225945,72.5270563176316,72.8320321875859,65.3513539036488,68.5510974444323,67.7455908576081,65.9343670881594,70.0237029989886,76.3684176791357,71.1523161392399,70.1823473304624,73.3325130204509,64.4904614297483],"y":[217.883598102956,139.051372680963,146.622361423326,170.370045695611,153.898623927699,145.814289806469,203.673454243228,165.272416936933,212.9244570969,200.255650143007,229.63976052728,135.68300205593,200.494716006995,137.386341027837,171.253774485499,259.055128945661,154.786979739307,179.064898418176,156.037224602219,165.796072788426,210.242669878641,189.69735808845,118.615439370615,188.448504507506,206.284828350886,175.52737673113,161.060373221781,237.750562013127,170.347868659754,195.484662370576,217.768891500261,174.011757483877,177.052210576265,242.143376153595,183.925064318066,132.627548955595,190.952930655173,169.289894116674,250.070228781463,195.448263104048,181.597242479655,246.064878277451,186.777816795457,308.1018089375,164.202047994447,167.3119165644,239.945522175595,132.398698644073,200.047697312824,154.294501657568,220.476340815789,224.01561880013,162.5172769805,191.314564825127,160.076388765251,126.836221729967,179.3222030502,175.655082867957,163.514590501749,192.483750620463,218.842648114306,163.125274587032,125.559763062661,228.406099830922,218.038034706137,220.095271848724,212.26973289974,189.807589662565,184.688033962162,181.734717306545,179.479358277754,232.10379041193,135.784551941167,111.000726280215,250.571852638809,153.23682306578,196.801578326229,166.160421540986,239.662048367079,257.649392564646,167.552822997289,179.471360188772,212.945591580818,120.864676960982,177.269242475206,232.363137606814,215.130695933241,206.991723379185,184.300290869655,199.772273346405,193.11757587553,191.05568439198,202.151702057513,167.663843381579,161.965556682051,274.921551767277,241.987444887976,257.343556809995,187.815320492085,203.456330886625],"text":["X_sample: 69.44466<br />Y_sample: 217.8836","X_sample: 69.83286<br />Y_sample: 139.0514","X_sample: 68.00500<br />Y_sample: 146.6224","X_sample: 70.71319<br />Y_sample: 170.3700","X_sample: 66.45233<br />Y_sample: 153.8986","X_sample: 72.86135<br />Y_sample: 145.8143","X_sample: 68.38906<br />Y_sample: 203.6735","X_sample: 72.48544<br />Y_sample: 165.2724","X_sample: 70.87054<br />Y_sample: 212.9245","X_sample: 71.91301<br />Y_sample: 200.2557","X_sample: 71.98850<br />Y_sample: 229.6398","X_sample: 67.87708<br />Y_sample: 135.6830","X_sample: 67.79593<br />Y_sample: 200.4947","X_sample: 64.14859<br />Y_sample: 137.3863","X_sample: 67.31183<br />Y_sample: 171.2538","X_sample: 74.41653<br />Y_sample: 259.0551","X_sample: 69.80110<br />Y_sample: 154.7870","X_sample: 71.43486<br />Y_sample: 179.0649","X_sample: 69.05056<br />Y_sample: 156.0372","X_sample: 72.80065<br />Y_sample: 165.7961","X_sample: 72.64454<br />Y_sample: 210.2427","X_sample: 70.81535<br />Y_sample: 189.6974","X_sample: 71.23609<br />Y_sample: 118.6154","X_sample: 69.84229<br />Y_sample: 188.4485","X_sample: 71.98261<br />Y_sample: 206.2848","X_sample: 72.94172<br />Y_sample: 175.5274","X_sample: 64.57312<br />Y_sample: 161.0604","X_sample: 68.77684<br />Y_sample: 237.7506","X_sample: 66.96218<br />Y_sample: 170.3479","X_sample: 65.95793<br />Y_sample: 195.4847","X_sample: 72.53468<br />Y_sample: 217.7689","X_sample: 69.18888<br />Y_sample: 174.0118","X_sample: 67.33128<br />Y_sample: 177.0522","X_sample: 67.64513<br />Y_sample: 242.1434","X_sample: 69.68303<br />Y_sample: 183.9251","X_sample: 72.00242<br />Y_sample: 132.6275","X_sample: 71.94018<br />Y_sample: 190.9529","X_sample: 70.24435<br />Y_sample: 169.2899","X_sample: 67.63469<br />Y_sample: 250.0702","X_sample: 74.27305<br />Y_sample: 195.4483","X_sample: 64.93875<br />Y_sample: 181.5972","X_sample: 69.58693<br />Y_sample: 246.0649","X_sample: 78.03578<br />Y_sample: 186.7778","X_sample: 75.52530<br />Y_sample: 308.1018","X_sample: 72.21230<br />Y_sample: 164.2020","X_sample: 73.53227<br />Y_sample: 167.3119","X_sample: 69.77620<br />Y_sample: 239.9455","X_sample: 66.24212<br />Y_sample: 132.3987","X_sample: 63.62630<br />Y_sample: 200.0477","X_sample: 64.73832<br />Y_sample: 154.2945","X_sample: 71.06490<br />Y_sample: 220.4763","X_sample: 69.95999<br />Y_sample: 224.0156","X_sample: 64.28976<br />Y_sample: 162.5173","X_sample: 68.31749<br />Y_sample: 191.3146","X_sample: 68.55676<br />Y_sample: 160.0764","X_sample: 67.27040<br />Y_sample: 126.8362","X_sample: 69.81666<br />Y_sample: 179.3222","X_sample: 66.50587<br />Y_sample: 175.6551","X_sample: 69.21090<br />Y_sample: 163.5146","X_sample: 73.07951<br />Y_sample: 192.4838","X_sample: 71.35381<br />Y_sample: 218.8426","X_sample: 68.44142<br />Y_sample: 163.1253","X_sample: 68.27865<br />Y_sample: 125.5598","X_sample: 70.25768<br />Y_sample: 228.4061","X_sample: 67.19278<br />Y_sample: 218.0380","X_sample: 72.40247<br />Y_sample: 220.0953","X_sample: 67.55315<br />Y_sample: 212.2697","X_sample: 68.63343<br />Y_sample: 189.8076","X_sample: 69.67311<br />Y_sample: 184.6880","X_sample: 72.74688<br />Y_sample: 181.7347","X_sample: 69.76531<br />Y_sample: 179.4794","X_sample: 74.86273<br />Y_sample: 232.1038","X_sample: 71.46478<br />Y_sample: 135.7846","X_sample: 70.38802<br />Y_sample: 111.0007","X_sample: 70.02773<br />Y_sample: 250.5719","X_sample: 73.01438<br />Y_sample: 153.2368","X_sample: 69.57422<br />Y_sample: 196.8016","X_sample: 70.77679<br />Y_sample: 166.1604","X_sample: 70.15004<br />Y_sample: 239.6620","X_sample: 76.93278<br />Y_sample: 257.6494","X_sample: 68.37756<br />Y_sample: 167.5528","X_sample: 67.30839<br />Y_sample: 179.4714","X_sample: 69.04882<br />Y_sample: 212.9456","X_sample: 71.33546<br />Y_sample: 120.8647","X_sample: 66.81831<br />Y_sample: 177.2692","X_sample: 67.77303<br />Y_sample: 232.3631","X_sample: 68.69515<br />Y_sample: 215.1307","X_sample: 73.02943<br />Y_sample: 206.9917","X_sample: 72.52706<br />Y_sample: 184.3003","X_sample: 72.83203<br />Y_sample: 199.7723","X_sample: 65.35135<br />Y_sample: 193.1176","X_sample: 68.55110<br />Y_sample: 191.0557","X_sample: 67.74559<br />Y_sample: 202.1517","X_sample: 65.93437<br />Y_sample: 167.6638","X_sample: 70.02370<br />Y_sample: 161.9656","X_sample: 76.36842<br />Y_sample: 274.9216","X_sample: 71.15232<br />Y_sample: 241.9874","X_sample: 70.18235<br />Y_sample: 257.3436","X_sample: 73.33251<br />Y_sample: 187.8153","X_sample: 64.49046<br />Y_sample: 203.4563"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(173,216,230,1)","opacity":0.9,"size":9.4488188976378,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(0,0,139,1)"}},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[63.6263025445581,63.8087010128525,63.9910994811469,64.1734979494413,64.3558964177356,64.53829488603,64.7206933543244,64.9030918226188,65.0854902909131,65.2678887592075,65.4502872275019,65.6326856957963,65.8150841640907,65.997482632385,66.1798811006794,66.3622795689738,66.5446780372682,66.7270765055626,66.9094749738569,67.0918734421513,67.2742719104457,67.4566703787401,67.6390688470345,67.8214673153288,68.0038657836232,68.1862642519176,68.368662720212,68.5510611885063,68.7334596568007,68.9158581250951,69.0982565933895,69.2806550616839,69.4630535299782,69.6454519982726,69.827850466567,70.0102489348614,70.1926474031557,70.3750458714501,70.5574443397445,70.7398428080389,70.9222412763333,71.1046397446276,71.287038212922,71.4694366812164,71.6518351495108,71.8342336178052,72.0166320860995,72.1990305543939,72.3814290226883,72.5638274909827,72.746225959277,72.9286244275714,73.1110228958658,73.2934213641602,73.4758198324546,73.6582183007489,73.8406167690433,74.0230152373377,74.2054137056321,74.3878121739264,74.5702106422208,74.7526091105152,74.9350075788096,75.117406047104,75.2998045153983,75.4822029836927,75.6646014519871,75.8469999202815,76.0293983885759,76.2117968568702,76.3941953251646,76.576593793459,76.7589922617534,76.9413907300478,77.1237891983421,77.3061876666365,77.4885861349309,77.6709846032253,77.8533830715196,78.035781539814],"y":[166.965097596255,167.624520960318,168.283944324381,168.943367688444,169.602791052507,170.262214416569,170.921637780632,171.581061144695,172.240484508758,172.899907872821,173.559331236884,174.218754600947,174.87817796501,175.537601329073,176.197024693136,176.856448057199,177.515871421262,178.175294785325,178.834718149388,179.494141513451,180.153564877514,180.812988241577,181.47241160564,182.131834969703,182.791258333766,183.450681697829,184.110105061891,184.769528425954,185.428951790017,186.08837515408,186.747798518143,187.407221882206,188.066645246269,188.726068610332,189.385491974395,190.044915338458,190.704338702521,191.363762066584,192.023185430647,192.68260879471,193.342032158773,194.001455522836,194.660878886899,195.320302250962,195.979725615025,196.639148979088,197.298572343151,197.957995707214,198.617419071277,199.27684243534,199.936265799402,200.595689163465,201.255112527528,201.914535891591,202.573959255654,203.233382619717,203.89280598378,204.552229347843,205.211652711906,205.871076075969,206.530499440032,207.189922804095,207.849346168158,208.508769532221,209.168192896284,209.827616260347,210.48703962441,211.146462988473,211.805886352536,212.465309716599,213.124733080662,213.784156444724,214.443579808787,215.10300317285,215.762426536913,216.421849900976,217.081273265039,217.740696629102,218.400119993165,219.059543357228],"text":["X_sample: 63.62630<br />Y_sample: 166.9651","X_sample: 63.80870<br />Y_sample: 167.6245","X_sample: 63.99110<br />Y_sample: 168.2839","X_sample: 64.17350<br />Y_sample: 168.9434","X_sample: 64.35590<br />Y_sample: 169.6028","X_sample: 64.53829<br />Y_sample: 170.2622","X_sample: 64.72069<br />Y_sample: 170.9216","X_sample: 64.90309<br />Y_sample: 171.5811","X_sample: 65.08549<br />Y_sample: 172.2405","X_sample: 65.26789<br />Y_sample: 172.8999","X_sample: 65.45029<br />Y_sample: 173.5593","X_sample: 65.63269<br />Y_sample: 174.2188","X_sample: 65.81508<br />Y_sample: 174.8782","X_sample: 65.99748<br />Y_sample: 175.5376","X_sample: 66.17988<br />Y_sample: 176.1970","X_sample: 66.36228<br />Y_sample: 176.8564","X_sample: 66.54468<br />Y_sample: 177.5159","X_sample: 66.72708<br />Y_sample: 178.1753","X_sample: 66.90947<br />Y_sample: 178.8347","X_sample: 67.09187<br />Y_sample: 179.4941","X_sample: 67.27427<br />Y_sample: 180.1536","X_sample: 67.45667<br />Y_sample: 180.8130","X_sample: 67.63907<br />Y_sample: 181.4724","X_sample: 67.82147<br />Y_sample: 182.1318","X_sample: 68.00387<br />Y_sample: 182.7913","X_sample: 68.18626<br />Y_sample: 183.4507","X_sample: 68.36866<br />Y_sample: 184.1101","X_sample: 68.55106<br />Y_sample: 184.7695","X_sample: 68.73346<br />Y_sample: 185.4290","X_sample: 68.91586<br />Y_sample: 186.0884","X_sample: 69.09826<br />Y_sample: 186.7478","X_sample: 69.28066<br />Y_sample: 187.4072","X_sample: 69.46305<br />Y_sample: 188.0666","X_sample: 69.64545<br />Y_sample: 188.7261","X_sample: 69.82785<br />Y_sample: 189.3855","X_sample: 70.01025<br />Y_sample: 190.0449","X_sample: 70.19265<br />Y_sample: 190.7043","X_sample: 70.37505<br />Y_sample: 191.3638","X_sample: 70.55744<br />Y_sample: 192.0232","X_sample: 70.73984<br />Y_sample: 192.6826","X_sample: 70.92224<br />Y_sample: 193.3420","X_sample: 71.10464<br />Y_sample: 194.0015","X_sample: 71.28704<br />Y_sample: 194.6609","X_sample: 71.46944<br />Y_sample: 195.3203","X_sample: 71.65184<br />Y_sample: 195.9797","X_sample: 71.83423<br />Y_sample: 196.6391","X_sample: 72.01663<br />Y_sample: 197.2986","X_sample: 72.19903<br />Y_sample: 197.9580","X_sample: 72.38143<br />Y_sample: 198.6174","X_sample: 72.56383<br />Y_sample: 199.2768","X_sample: 72.74623<br />Y_sample: 199.9363","X_sample: 72.92862<br />Y_sample: 200.5957","X_sample: 73.11102<br />Y_sample: 201.2551","X_sample: 73.29342<br />Y_sample: 201.9145","X_sample: 73.47582<br />Y_sample: 202.5740","X_sample: 73.65822<br />Y_sample: 203.2334","X_sample: 73.84062<br />Y_sample: 203.8928","X_sample: 74.02302<br />Y_sample: 204.5522","X_sample: 74.20541<br />Y_sample: 205.2117","X_sample: 74.38781<br />Y_sample: 205.8711","X_sample: 74.57021<br />Y_sample: 206.5305","X_sample: 74.75261<br />Y_sample: 207.1899","X_sample: 74.93501<br />Y_sample: 207.8493","X_sample: 75.11741<br />Y_sample: 208.5088","X_sample: 75.29980<br />Y_sample: 209.1682","X_sample: 75.48220<br />Y_sample: 209.8276","X_sample: 75.66460<br />Y_sample: 210.4870","X_sample: 75.84700<br />Y_sample: 211.1465","X_sample: 76.02940<br />Y_sample: 211.8059","X_sample: 76.21180<br />Y_sample: 212.4653","X_sample: 76.39420<br />Y_sample: 213.1247","X_sample: 76.57659<br />Y_sample: 213.7842","X_sample: 76.75899<br />Y_sample: 214.4436","X_sample: 76.94139<br />Y_sample: 215.1030","X_sample: 77.12379<br />Y_sample: 215.7624","X_sample: 77.30619<br />Y_sample: 216.4218","X_sample: 77.48859<br />Y_sample: 217.0813","X_sample: 77.67098<br />Y_sample: 217.7407","X_sample: 77.85338<br />Y_sample: 218.4001","X_sample: 78.03578<br />Y_sample: 219.0595"],"type":"scatter","mode":"lines","name":"fitted values","line":{"width":3.77952755905512,"color":"rgba(51,102,255,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":43.7625570776256,"r":7.30593607305936,"b":40.1826484018265,"l":43.1050228310502},"plot_bgcolor":"rgba(255,255,255,1)","paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"title":{"text":"Weight by height among American men","font":{"color":"rgba(0,0,0,1)","family":"","size":17.5342465753425},"x":0,"xref":"paper"},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[62.9058285947953,78.7562554895768],"tickmode":"array","ticktext":["64","68","72","76"],"tickvals":[64,68,72,76],"categoryorder":"array","categoryarray":["64","68","72","76"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":true,"linecolor":"rgba(0,0,0,1)","linewidth":0.66417600664176,"showgrid":false,"gridcolor":null,"gridwidth":0,"zeroline":false,"anchor":"y","title":{"text":"Sample Height","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187}},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[101.14567214735,317.956863070364],"tickmode":"array","ticktext":["150","200","250","300"],"tickvals":[150,200,250,300],"categoryorder":"array","categoryarray":["150","200","250","300"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":true,"linecolor":"rgba(0,0,0,1)","linewidth":0.66417600664176,"showgrid":false,"gridcolor":null,"gridwidth":0,"zeroline":false,"anchor":"x","title":{"text":"Sample Weight","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187}},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":false,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":1.88976377952756,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.689497716895}},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"source":"A","attrs":{"4ecc77b87c3d":{"x":{},"y":{},"type":"scatter"},"4ecc5fb456a5":{"x":{},"y":{}}},"cur_data":"4ecc77b87c3d","visdat":{"4ecc77b87c3d":["function (y) ","x"],"4ecc5fb456a5":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<p><strong>The summary of a linear model on the single mock data</strong></p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>mylm <span class="ot">=</span> <span class="fu">lm</span>(Y_sample<span class="sc">~</span>X_sample, <span class="at">data=</span>sample)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>b <span class="ot">=</span> mylm<span class="sc">$</span>coef </span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">Intercept =</span> b[<span class="dv">1</span>], <span class="at">Slope =</span> b[<span class="dv">2</span>]) <span class="sc">%&gt;%</span> pander<span class="sc">::</span><span class="fu">pander</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 11%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">Intercept</th>
+<th style="text-align: center;">Slope</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">-63.06</td>
+<td style="text-align: center;">3.615</td>
+</tr>
+</tbody>
+</table>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>b0 <span class="ot">=</span> b[<span class="dv">1</span>]</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>b1 <span class="ot">=</span> b[<span class="dv">2</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="step-three--part-2-calculate-the-test-statistic" class="level3" data-number="5.3.5">
+<h3 data-number="5.3.5" class="anchored" data-anchor-id="step-three--part-2-calculate-the-test-statistic"><span class="header-section-number">5.3.5</span> Step Three- Part 2: Calculate the test statistic</h3>
+<p>We are going to estimate the distribution of all possible sample test statistics that someone could get from the population distribution assuming the null hypothesis is true. This allows us to see, under the null hypothesis, see how likely we are to get a sample as or more extreme than what we would ideally expect.</p>
+<p><strong>Calculating <span class="math inline">\(s_{b_0}\)</span> and <span class="math inline">\(s_{b_1}\)</span></strong></p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">=</span> <span class="dv">100</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>mse <span class="ot">=</span> <span class="fu">sum</span>((sample<span class="sc">$</span>Y_sample <span class="sc">-</span> mylm<span class="sc">$</span>fitted.values)<span class="sc">^</span><span class="dv">2</span>) <span class="sc">/</span> n</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>s_b0 <span class="ot">=</span> <span class="fu">sqrt</span>(mse<span class="sc">*</span>((<span class="dv">1</span> <span class="sc">/</span> n) <span class="sc">+</span> (<span class="fu">mean</span>(sample<span class="sc">$</span>X_sample)<span class="sc">^</span><span class="dv">2</span> <span class="sc">/</span> <span class="fu">sum</span>((sample<span class="sc">$</span>X_sample <span class="sc">-</span> <span class="fu">mean</span>(sample<span class="sc">$</span>X_sample))<span class="sc">^</span><span class="dv">2</span>))))</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>s_b1 <span class="ot">=</span> <span class="fu">sqrt</span>(mse<span class="sc">/</span><span class="fu">sum</span>((sample<span class="sc">$</span>X_sample <span class="sc">-</span> <span class="fu">mean</span>(sample<span class="sc">$</span>X_sample))<span class="sc">^</span><span class="dv">2</span>))</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>pander<span class="sc">::</span><span class="fu">pander</span>(<span class="fu">paste</span>(<span class="st">"$s_{b_0}$ is"</span>,s_b0 <span class="sc">%&gt;%</span> <span class="fu">round</span>(<span class="dv">2</span>), <span class="st">"and $s_{b_1}$ is"</span>,s_b1 <span class="sc">%&gt;%</span> <span class="fu">round</span>(<span class="dv">2</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><span class="math inline">\(s_{b_0}\)</span> is 86.23 and <span class="math inline">\(s_{b_1}\)</span> is 1.23</p>
+</div>
+</div>
+<p><strong>Calculating the t-value for <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span></strong></p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>t_b0 <span class="ot">=</span> (b0 <span class="sc">-</span> <span class="dv">0</span>)<span class="sc">/</span>s_b0</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>t_b1 <span class="ot">=</span> (b1 <span class="sc">-</span> <span class="dv">0</span>)<span class="sc">/</span>s_b1</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>pander<span class="sc">::</span><span class="fu">pander</span>(<span class="fu">paste</span>(<span class="st">"the t-value for $b_0$ is"</span>,t_b0 <span class="sc">%&gt;%</span> <span class="fu">round</span>(<span class="dv">2</span>), <span class="st">"the t-value for $b_1$ is"</span>,t_b1 <span class="sc">%&gt;%</span> <span class="fu">round</span>(<span class="dv">2</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p>the t-value for <span class="math inline">\(b_0\)</span> is -0.73 the t-value for <span class="math inline">\(b_1\)</span> is 2.93</p>
+</div>
+</div>
+</section>
+<section id="step-four-determine-the-p-value" class="level3" data-number="5.3.6">
+<h3 data-number="5.3.6" class="anchored" data-anchor-id="step-four-determine-the-p-value"><span class="header-section-number">5.3.6</span> Step Four: Determine the p-value</h3>
+<p><strong>Calculate the p-value for the Y intercept hypothesis and the slope hypothesis</strong></p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>p_b0 <span class="ot">=</span> <span class="fu">pt</span>(<span class="sc">-</span><span class="fu">abs</span>(t_b0), n<span class="dv">-2</span>)<span class="sc">*</span><span class="dv">2</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>p_b1 <span class="ot">=</span> <span class="fu">pt</span>(<span class="sc">-</span><span class="fu">abs</span>(t_b1), n<span class="dv">-2</span>)<span class="sc">*</span><span class="dv">2</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>pander<span class="sc">::</span><span class="fu">pander</span>(<span class="fu">paste</span>(<span class="st">"the p-value for $b_0$ is"</span>,p_b0 <span class="sc">%&gt;%</span> <span class="fu">round</span>(<span class="dv">2</span>), <span class="st">"the p-value for $b_1$ is"</span>,p_b1 <span class="sc">%&gt;%</span> <span class="fu">round</span>(<span class="dv">2</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p>the p-value for <span class="math inline">\(b_0\)</span> is 0.47 the p-value for <span class="math inline">\(b_1\)</span> is 0</p>
+</div>
+</div>
+</section>
+<section id="step-five-compare-the-p-value-to-the-significance-level" class="level3" data-number="5.3.7">
+<h3 data-number="5.3.7" class="anchored" data-anchor-id="step-five-compare-the-p-value-to-the-significance-level"><span class="header-section-number">5.3.7</span> Step Five: Compare the p-value to the significance level</h3>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>reject_null_b0 <span class="ot">=</span> (p_b0 <span class="sc">&lt;=</span> alpha)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>reject_null_b1 <span class="ot">=</span> (p_b1 <span class="sc">&lt;=</span> alpha)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>pander<span class="sc">::</span><span class="fu">pander</span>(<span class="fu">paste</span>(<span class="st">"The P-value for the Y-intercept hypothesis is"</span>,p_b0 <span class="sc">%&gt;%</span> <span class="fu">round</span>(<span class="dv">6</span>),<span class="st">"."</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p>The P-value for the Y-intercept hypothesis is 0.466342 .</p>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>pander<span class="sc">::</span><span class="fu">pander</span>(<span class="fu">paste</span>(<span class="st">"Since it is"</span>,reject_null_b0 <span class="sc">%&gt;%</span> <span class="fu">tolower</span>(),<span class="st">"that (p&lt;a), we"</span>,<span class="fu">ifelse</span>(reject_null_b0,<span class="st">""</span>,<span class="st">"fail to"</span>),<span class="st">"reject the null hypothesis"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p>Since it is false that (p&lt;a), we fail to reject the null hypothesis</p>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>pander<span class="sc">::</span><span class="fu">pander</span>(<span class="fu">paste</span>(<span class="st">"The P-value for the slope hypothesis is"</span>,p_b1 <span class="sc">%&gt;%</span> <span class="fu">round</span>(<span class="dv">6</span>),<span class="st">"."</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p>The P-value for the slope hypothesis is 0.004198 .</p>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>pander<span class="sc">::</span><span class="fu">pander</span>(<span class="fu">paste</span>(<span class="st">"Since it is"</span>,reject_null_b1 <span class="sc">%&gt;%</span> <span class="fu">tolower</span>(),<span class="st">"that (p&lt;a), we"</span>,<span class="fu">ifelse</span>(reject_null_b1,<span class="st">""</span>,<span class="st">"fail to"</span>),<span class="st">"reject the null hypothesis"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p>Since it is true that (p&lt;a), we reject the null hypothesis</p>
+</div>
+</div>
+<p>Here is the R calculated code from the sample.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>mylm <span class="sc">%&gt;%</span> summary <span class="sc">%&gt;%</span> pander<span class="sc">::</span><span class="fu">pander</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 15%">
+<col style="width: 18%">
+<col style="width: 13%">
+<col style="width: 15%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">&nbsp;</th>
+<th style="text-align: center;">Estimate</th>
+<th style="text-align: center;">Std. Error</th>
+<th style="text-align: center;">t value</th>
+<th style="text-align: center;">Pr(&gt;|t|)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><strong>(Intercept)</strong></td>
+<td style="text-align: center;">-63.06</td>
+<td style="text-align: center;">87.11</td>
+<td style="text-align: center;">-0.7239</td>
+<td style="text-align: center;">0.4708</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>X_sample</strong></td>
+<td style="text-align: center;">3.615</td>
+<td style="text-align: center;">1.246</td>
+<td style="text-align: center;">2.902</td>
+<td style="text-align: center;">0.004578</td>
+</tr>
+</tbody>
+</table>
+<table class="table table-sm table-striped">
+<caption>Fitting linear model: Y_sample ~ X_sample</caption>
+<colgroup>
+<col style="width: 20%">
+<col style="width: 30%">
+<col style="width: 13%">
+<col style="width: 23%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">Observations</th>
+<th style="text-align: center;">Residual Std. Error</th>
+<th style="text-align: center;"><span class="math inline">\(R^2\)</span></th>
+<th style="text-align: center;">Adjusted <span class="math inline">\(R^2\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">100</td>
+<td style="text-align: center;">36.17</td>
+<td style="text-align: center;">0.07914</td>
+<td style="text-align: center;">0.06974</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>The probability of picking a sample as extreme or more extreme given the null hypothesis is visualized below as the area under the curve except for the middle section.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">1</span>))</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">dt</span>(x, <span class="at">df=</span>n<span class="dv">-1</span>), <span class="at">from=</span><span class="sc">-</span><span class="dv">10</span>, <span class="at">to=</span><span class="dv">10</span>, <span class="at">main=</span><span class="st">"Null hypothesis distribution with the</span><span class="sc">\n</span><span class="st">probability of the intercept sample result"</span>, <span class="at">ylab=</span><span class="st">""</span>, <span class="at">xlab=</span><span class="st">"Possible t-values"</span>, <span class="at">yaxt=</span><span class="st">"n"</span>)</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v=</span><span class="fu">c</span>(<span class="fu">abs</span>(t_b0), <span class="sc">-</span><span class="fu">abs</span>(t_b0)))</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">dt</span>(x, <span class="at">df=</span>n<span class="dv">-1</span>), <span class="at">from=</span><span class="sc">-</span><span class="dv">10</span>, <span class="at">to=</span><span class="dv">10</span>, <span class="at">main=</span><span class="st">"Null hypothesis distribution with the</span><span class="sc">\n</span><span class="st">probability of the slope sample result"</span>, <span class="at">ylab=</span><span class="st">""</span>, <span class="at">xlab=</span><span class="st">"Possible t-values"</span>, <span class="at">yaxt=</span><span class="st">"n"</span>)</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v=</span><span class="fu">c</span>(<span class="fu">abs</span>(t_b1), <span class="sc">-</span><span class="fu">abs</span>(t_b1)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="i_bivartests_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="step-three-and-four-through-simulation" class="level3" data-number="5.3.8">
+<h3 data-number="5.3.8" class="anchored" data-anchor-id="step-three-and-four-through-simulation"><span class="header-section-number">5.3.8</span> Step Three and Four through simulation</h3>
+<p>In the steps above, we estimate what it would be like if we were to take many samples using an estimated sample distribution of both intercepts and slopes. Below, using the population parameters defined above, 1000 samples will be taken of Americans in which an actual sampling distribution will be constructed.</p>
+<p><strong>Results from 1000 samples</strong></p>
+<p>Below is the result of overlaying every proposed line from each of the 1000 samples.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>simulations <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">b0 =</span> <span class="fu">rep</span>(<span class="cn">NA</span>, N),</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">b1 =</span> <span class="fu">rep</span>(<span class="cn">NA</span>, N),</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">rmse =</span> <span class="fu">rep</span>(<span class="cn">NA</span>, N)</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>N) {</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>  Y <span class="ot">&lt;-</span> beta_0 <span class="sc">+</span> beta_1<span class="sc">*</span>X <span class="sc">+</span> <span class="fu">rnorm</span>(n, <span class="dv">0</span>, sigma) <span class="co">#Sample Y from true model</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>  mylm <span class="ot">&lt;-</span> <span class="fu">lm</span>(Y <span class="sc">~</span> X)</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>  simulations<span class="sc">$</span>b0[i] <span class="ot">&lt;-</span> <span class="fu">coef</span>(mylm)[<span class="dv">1</span>]</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>  simulations<span class="sc">$</span>b1[i] <span class="ot">&lt;-</span> <span class="fu">coef</span>(mylm)[<span class="dv">2</span>]</span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>  simulations<span class="sc">$</span>rmse[i] <span class="ot">&lt;-</span> <span class="fu">summary</span>(mylm)<span class="sc">$</span>sigma</span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">X =</span> X, <span class="at">Y =</span> Y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>(<span class="fu">ggplot</span>(data, <span class="fu">aes</span>(X, Y)) <span class="sc">+</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">"gray"</span>) <span class="sc">+</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="fu">aes</span>(<span class="at">intercept =</span> b0, <span class="at">slope =</span> b1), <span class="at">data =</span> simulations, <span class="at">color =</span> <span class="st">"#5A5A5A"</span>) <span class="sc">+</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> beta_0, <span class="at">slope =</span> beta_1, <span class="at">color =</span> <span class="st">"green"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> beta_0 <span class="sc">+</span> sigma, <span class="at">slope =</span> beta_1, <span class="at">color =</span> <span class="st">"darkgreen"</span>, <span class="at">size =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> beta_0 <span class="sc">-</span> sigma, <span class="at">slope =</span> beta_1, <span class="at">color =</span> <span class="st">"darkgreen"</span>, <span class="at">size =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> beta_0 <span class="sc">+</span> <span class="dv">2</span> <span class="sc">*</span> sigma, <span class="at">slope =</span> beta_1, <span class="at">color =</span> <span class="st">"darkgreen"</span>, <span class="at">size =</span> <span class="fl">0.25</span>) <span class="sc">+</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> beta_0 <span class="sc">-</span> <span class="dv">2</span> <span class="sc">*</span> sigma, <span class="at">slope =</span> beta_1, <span class="at">color =</span> <span class="st">"darkgreen"</span>, <span class="at">size =</span> <span class="fl">0.25</span>) <span class="sc">+</span></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> beta_0 <span class="sc">+</span> <span class="dv">3</span> <span class="sc">*</span> sigma, <span class="at">slope =</span> beta_1, <span class="at">color =</span> <span class="st">"darkgreen"</span>, <span class="at">size =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> beta_0 <span class="sc">-</span> <span class="dv">3</span> <span class="sc">*</span> sigma, <span class="at">slope =</span> beta_1, <span class="at">color =</span> <span class="st">"darkgreen"</span>, <span class="at">size =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Regression Lines from many Samples</span><span class="sc">\n</span><span class="st"> Plus Residual Standard Deviation Lines"</span>,</span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"X"</span>,</span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Y"</span>) <span class="sc">+</span></span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>  ggthemes<span class="sc">::</span><span class="fu">theme_stata</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="i_bivartests_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Below is the histogram of the combined samples to make a sampling distribution of intercepts on the left and slopes on the right. Notice from the above graph and below distribution that the slope intercept has very large variation due to the increased variation since the data is centered away from the intercept.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>b0_samples <span class="ot">=</span> (<span class="fu">ggplot</span>(simulations, <span class="fu">aes</span>(<span class="at">x =</span> b0)) <span class="sc">+</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">y =</span> ..density..), <span class="at">fill =</span> <span class="st">"skyblue3"</span>, <span class="at">bins =</span> <span class="dv">30</span>) <span class="sc">+</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">color =</span> <span class="st">"green"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Sampling Distribution</span><span class="sc">\n</span><span class="st"> Y-intercept"</span>,</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="fu">expression</span>(<span class="fu">paste</span>(<span class="st">"Estimates of "</span>, beta[<span class="dv">0</span>], <span class="st">" from each Sample"</span>)),</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Density"</span>) <span class="sc">+</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>  ggthemes<span class="sc">::</span><span class="fu">theme_stata</span>() <span class="sc">+</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">axis.text.y=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>          <span class="at">axis.ticks.y=</span><span class="fu">element_blank</span>()) <span class="sc">+</span></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> beta_0, <span class="at">color=</span><span class="st">'purple'</span>))</span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>b1_samples <span class="ot">=</span> (<span class="fu">ggplot</span>(simulations, <span class="fu">aes</span>(<span class="at">x =</span> b1)) <span class="sc">+</span></span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">y =</span> ..density..), <span class="at">fill =</span> <span class="st">"skyblue3"</span>, <span class="at">bins =</span> <span class="dv">30</span>) <span class="sc">+</span></span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">color =</span> <span class="st">"green"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Sampling Distribution</span><span class="sc">\n</span><span class="st"> Slope"</span>,</span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="fu">expression</span>(<span class="fu">paste</span>(<span class="st">"Estimates of "</span>, beta[<span class="dv">1</span>], <span class="st">" from each Sample"</span>)),</span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Density"</span>) <span class="sc">+</span></span>
+<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a>  ggthemes<span class="sc">::</span><span class="fu">theme_stata</span>() <span class="sc">+</span></span>
+<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">axis.text.y=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a>          <span class="at">axis.ticks.y=</span><span class="fu">element_blank</span>()) <span class="sc">+</span></span>
+<span id="cb20-21"><a href="#cb20-21" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> beta_1, <span class="at">color=</span><span class="st">'purple'</span>))</span>
+<span id="cb20-22"><a href="#cb20-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-23"><a href="#cb20-23" aria-hidden="true" tabindex="-1"></a>gridExtra<span class="sc">::</span><span class="fu">grid.arrange</span>(b0_samples , b1_samples, <span class="at">ncol =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="i_bivartests_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p><strong>Results from the sampling distribution</strong></p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>pander<span class="sc">::</span><span class="fu">pander</span>(<span class="fu">paste</span>(<span class="st">"The mean of the sampling distribution for the Y-intercept turned out to be"</span>, simulations<span class="sc">$</span>b0 <span class="sc">%&gt;%</span> mean <span class="sc">%&gt;%</span> <span class="fu">round</span>(<span class="dv">2</span>),<span class="st">". Our estimate was"</span>,b0 <span class="sc">%&gt;%</span> <span class="fu">round</span>(<span class="dv">2</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p>The mean of the sampling distribution for the Y-intercept turned out to be -179.73 . Our estimate was -63.06</p>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>pander<span class="sc">::</span><span class="fu">pander</span>(<span class="fu">paste</span>(<span class="st">"The mean of the sampling distribution for the slope turned out to be"</span>, simulations<span class="sc">$</span>b1 <span class="sc">%&gt;%</span> mean <span class="sc">%&gt;%</span> <span class="fu">round</span>(<span class="dv">2</span>),<span class="st">". Our estimate was"</span>,b1 <span class="sc">%&gt;%</span> <span class="fu">round</span>(<span class="dv">2</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p>The mean of the sampling distribution for the slope turned out to be 5.31 . Our estimate was 3.62</p>
+</div>
+</div>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>pander<span class="sc">::</span><span class="fu">pander</span>(<span class="fu">paste</span>(<span class="st">"The variance of the sampling distribution for the Y-intercept turned out to be"</span>, simulations<span class="sc">$</span>b0 <span class="sc">%&gt;%</span> sd <span class="sc">%&gt;%</span> <span class="fu">round</span>(<span class="dv">2</span>),<span class="st">". Our estimate was"</span>,s_b0 <span class="sc">%&gt;%</span> <span class="fu">round</span>(<span class="dv">2</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p>The variance of the sampling distribution for the Y-intercept turned out to be 90.11 . Our estimate was 86.23</p>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>pander<span class="sc">::</span><span class="fu">pander</span>(<span class="fu">paste</span>(<span class="st">"The variance of the sampling distribution for the slope turned out to be"</span>, simulations<span class="sc">$</span>b1 <span class="sc">%&gt;%</span> sd <span class="sc">%&gt;%</span> <span class="fu">round</span>(<span class="dv">2</span>),<span class="st">". Our estimate was"</span>,s_b1 <span class="sc">%&gt;%</span> <span class="fu">round</span>(<span class="dv">2</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p>The variance of the sampling distribution for the slope turned out to be 1.28 . Our estimate was 1.23</p>
+</div>
+</div>
+</section>
+</section>
+<section id="setting-confidence-intervals" class="level2" data-number="5.4">
+<h2 data-number="5.4" class="anchored" data-anchor-id="setting-confidence-intervals"><span class="header-section-number">5.4</span> Setting Confidence Intervals</h2>
+<p>Confidence intervals, instead of exploiting the null hypothesis distribution to calculate uncertainty, use the sample distribution itself to calculate the likelihood that the true population parameter is withing the boundaries. With linear regression, confidence intervals are calculated for each coefficient of the regression model, <span class="math inline">\(\beta_0\)</span> (intercept) and <span class="math inline">\(\beta_1\)</span> (slope). The main idea is to provide a range in which the true population parameters are likely to lie, given the data and a specified level of confidence (usually 95%).</p>
+<p>The formula to calculate the confidence interval is below.</p>
+<p><span class="math display">\[
+\text{CI}(\beta_0) = b_0 \pm t^*_{n-2}\times s_{b_0} : \alpha=0.05
+\]</span></p>
+<p><span class="math display">\[
+\text{CI}(\beta_1) = b_1 \pm t^*_{n-2}\times s_{b_1} : \alpha=0.05
+\]</span></p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>tstar <span class="ot">=</span> <span class="fu">qt</span>(<span class="fl">0.975</span>, n<span class="dv">-2</span>)</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>ci_b0upper <span class="ot">=</span> b0 <span class="sc">+</span> tstar<span class="sc">*</span>s_b0</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>ci_b0lower <span class="ot">=</span> b0 <span class="sc">-</span> tstar<span class="sc">*</span>s_b0</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>ci_b1upper <span class="ot">=</span> b1 <span class="sc">+</span> tstar<span class="sc">*</span>s_b1</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>ci_b1lower <span class="ot">=</span> b1 <span class="sc">-</span> tstar<span class="sc">*</span>s_b1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>the <span class="math inline">\(t^*\)</span> is used to represent the t-value in which the area in between the negative and positive t-value on a t-distribution is .95.</p>
+<p>When we say that the confidence interval captures the true parameter values “95% of the time,” it means that if we were to repeat the sampling process many times and compute the confidence intervals for each sample, about 95% of those intervals would contain the true population parameter. Note that this doesn’t mean there’s a 95% probability that the true parameter lies within the specific confidence interval calculated from one sample; rather, it means that the procedure we use to construct the interval, when repeated across multiple samples, would produce intervals that contain the true parameter value in 95% of cases.</p>
+<section id="confidence-intervals-for-our-simulation" class="level3" data-number="5.4.1">
+<h3 data-number="5.4.1" class="anchored" data-anchor-id="confidence-intervals-for-our-simulation"><span class="header-section-number">5.4.1</span> Confidence Intervals for our simulation</h3>
+<p>We can directly visualize the 95 percent confidence interval with the visualization below. The purple line represents the true population parameter. The black line represents the sample estimation. The gray transparent box represents the 95 percent confidence interval.</p>
+<p>Note: The visualization below may be a bit misleading since the 95 percent confidence interval does not represent the sample below, but the percentage of all samples below.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>b0_samples_conf <span class="ot">=</span> (<span class="fu">ggplot</span>(simulations, <span class="fu">aes</span>(<span class="at">x =</span> b0)) <span class="sc">+</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">y =</span> ..density..), <span class="at">fill =</span> <span class="st">"skyblue3"</span>, <span class="at">bins =</span> <span class="dv">30</span>) <span class="sc">+</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_rect</span>(<span class="at">xmin =</span> ci_b0lower, <span class="at">xmax =</span> ci_b0upper, <span class="at">ymin=</span><span class="dv">0</span>, <span class="at">ymax=</span>.<span class="dv">3</span>, <span class="at">alpha=</span>.<span class="dv">01</span>) <span class="sc">+</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">color =</span> <span class="st">"green"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Sampling Distribution</span><span class="sc">\n</span><span class="st"> Y-intercept"</span>,</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="fu">expression</span>(<span class="fu">paste</span>(<span class="st">"Estimates of "</span>, beta[<span class="dv">0</span>], <span class="st">" from each Sample"</span>)),</span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Density"</span>) <span class="sc">+</span></span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>  ggthemes<span class="sc">::</span><span class="fu">theme_stata</span>() <span class="sc">+</span></span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">axis.text.y=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>          <span class="at">axis.ticks.y=</span><span class="fu">element_blank</span>()) <span class="sc">+</span></span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> beta_0, <span class="at">color=</span><span class="st">'purple'</span>) <span class="sc">+</span></span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> b0, <span class="at">color=</span><span class="st">'black'</span>, <span class="at">size=</span><span class="dv">2</span>)</span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a>b1_samples_conf <span class="ot">=</span> (<span class="fu">ggplot</span>(simulations, <span class="fu">aes</span>(<span class="at">x =</span> b1)) <span class="sc">+</span></span>
+<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">y =</span> ..density..), <span class="at">fill =</span> <span class="st">"skyblue3"</span>, <span class="at">bins =</span> <span class="dv">30</span>) <span class="sc">+</span></span>
+<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_rect</span>(<span class="at">xmin =</span> ci_b1lower, <span class="at">xmax =</span> ci_b1upper, <span class="at">ymin=</span><span class="dv">0</span>, <span class="at">ymax=</span>.<span class="dv">3</span>, <span class="at">alpha=</span>.<span class="dv">01</span>) <span class="sc">+</span></span>
+<span id="cb26-18"><a href="#cb26-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">color =</span> <span class="st">"green"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb26-19"><a href="#cb26-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Sampling Distribution</span><span class="sc">\n</span><span class="st"> Slope"</span>,</span>
+<span id="cb26-20"><a href="#cb26-20" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="fu">expression</span>(<span class="fu">paste</span>(<span class="st">"Estimates of "</span>, beta[<span class="dv">1</span>], <span class="st">" from each Sample"</span>)),</span>
+<span id="cb26-21"><a href="#cb26-21" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Density"</span>) <span class="sc">+</span></span>
+<span id="cb26-22"><a href="#cb26-22" aria-hidden="true" tabindex="-1"></a>  ggthemes<span class="sc">::</span><span class="fu">theme_stata</span>() <span class="sc">+</span></span>
+<span id="cb26-23"><a href="#cb26-23" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">axis.text.y=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb26-24"><a href="#cb26-24" aria-hidden="true" tabindex="-1"></a>          <span class="at">axis.ticks.y=</span><span class="fu">element_blank</span>()) <span class="sc">+</span></span>
+<span id="cb26-25"><a href="#cb26-25" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> beta_1, <span class="at">color=</span><span class="st">'purple'</span>) <span class="sc">+</span></span>
+<span id="cb26-26"><a href="#cb26-26" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> b1, <span class="at">color=</span><span class="st">'black'</span>, <span class="at">size=</span><span class="dv">2</span>))</span>
+<span id="cb26-27"><a href="#cb26-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-28"><a href="#cb26-28" aria-hidden="true" tabindex="-1"></a>gridExtra<span class="sc">::</span><span class="fu">grid.arrange</span>(b0_samples_conf , b1_samples_conf, <span class="at">ncol =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="i_bivartests_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./i_bivariate.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Bivariate Data</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./i_references.html" class="pagination-link">
+        <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>

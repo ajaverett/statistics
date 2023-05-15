@@ -6,6 +6,8 @@ editor_options:
 
 ## Univariate Distributions
 
+## The Normal Distribution
+
 A normal distribution, also known as a Gaussian distribution, is a continuous probability distribution that has a bell-shaped curve. The normal distribution is characterized by two parameters: the mean ($\mu$) and the standard deviation ($\sigma$). The following are the key properties of a normal density curve:
 
 -   Symmetry: The curve is symmetric around the mean.
@@ -33,9 +35,9 @@ where:
 </div>
 </center>
 ```
-
 68-95-99.7 Rule: Approximately 68% of the observations fall within one standard deviation of the mean ($\mu \pm \sigma$), 95% within two standard deviations ($\mu \pm 2\sigma$), and 99.7% within three standard deviations ($\mu \pm 3\sigma$).
 
+![](images/zdist.png)
 
 ```{=html}
 <center>

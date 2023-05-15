@@ -13,6 +13,7 @@ book:
     - i_distributions.qmd
     - i_univartests.qmd
     - i_bivariate.qmd
+    - i_bivartests.qmd
     - i_references.qmd
 
 

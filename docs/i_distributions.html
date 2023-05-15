@@ -127,6 +127,11 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./i_bivartests.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Regression Hypothesis Testing</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./i_references.html" class="sidebar-item-text sidebar-link">References</a>
   </div>
 </li>
@@ -139,7 +144,8 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#calculating-z-scores" id="toc-calculating-z-scores" class="nav-link active" data-scroll-target="#calculating-z-scores"><span class="toc-section-number">2.1</span>  Calculating Z-scores</a></li>
+  <li><a href="#the-normal-distribution" id="toc-the-normal-distribution" class="nav-link active" data-scroll-target="#the-normal-distribution"><span class="toc-section-number">2.1</span>  The Normal Distribution</a></li>
+  <li><a href="#calculating-z-scores" id="toc-calculating-z-scores" class="nav-link" data-scroll-target="#calculating-z-scores"><span class="toc-section-number">2.2</span>  Calculating Z-scores</a></li>
   </ul>
 </nav>
     </div>
@@ -163,6 +169,8 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
+<section id="the-normal-distribution" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="the-normal-distribution"><span class="header-section-number">2.1</span> The Normal Distribution</h2>
 <p>A normal distribution, also known as a Gaussian distribution, is a continuous probability distribution that has a bell-shaped curve. The normal distribution is characterized by two parameters: the mean (<span class="math inline">\(\mu\)</span>) and the standard deviation (<span class="math inline">\(\sigma\)</span>). The following are the key properties of a normal density curve:</p>
 <ul>
 <li>Symmetry: The curve is symmetric around the mean.</li>
@@ -170,8 +178,9 @@ ul.task-list li input[type="checkbox"] {
 <li>Asymptotic: The tails of the curve extend infinitely in both directions, approaching but never touching the horizontal axis.</li>
 <li>Total area: The total area under the curve is equal to 1, representing the probability of all possible outcomes.</li>
 </ul>
-<section id="calculating-z-scores" class="level2" data-number="2.1">
-<h2 data-number="2.1" class="anchored" data-anchor-id="calculating-z-scores"><span class="header-section-number">2.1</span> Calculating Z-scores</h2>
+</section>
+<section id="calculating-z-scores" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="calculating-z-scores"><span class="header-section-number">2.2</span> Calculating Z-scores</h2>
 <p>A z-score is a standardized measure that indicates the relative position of a data point within a distribution. It is calculated using the following formula:</p>
 <p><span class="math inline">\(z = \frac{(x - \mu)}{\sigma}\)</span></p>
 <p>where:</p>
@@ -187,6 +196,7 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </center>
 <p>68-95-99.7 Rule: Approximately 68% of the observations fall within one standard deviation of the mean (<span class="math inline">\(\mu \pm \sigma\)</span>), 95% within two standard deviations (<span class="math inline">\(\mu \pm 2\sigma\)</span>), and 99.7% within three standard deviations (<span class="math inline">\(\mu \pm 3\sigma\)</span>).</p>
+<p><img src="images/zdist.png" class="img-fluid"></p>
 <center>
 <div width="90%">
 <iframe src="https://byuimath.com/apps/normprobwitht.html?width=600&amp;z=1&amp;height=400&amp;left=1&amp;mid=0&amp;right=1&amp;area=a&amp;static=0&amp;title=1&amp;border=0" frameborder="0" width="650" height="450" data-external="1"></iframe>
