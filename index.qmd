@@ -28,14 +28,14 @@ Ratio data is similar to interval data but includes a meaningful zero value, all
 
 | Mathematical Function     | Nominal | Ordinal | Interval | Ratio |
 |---------------------------|---------|---------|----------|-------|
-| Classification            | Y      | Y      | Y       | Y    |
-| Counting                  | Y      | Y      | Y       | Y    |
-| Proportion/Percentages    | Y      | Y      | Y       | Y    |
-| Rank Ordering             | N      | Y      | Y       | Y    |
-| Addition                  | N      | N      | Y       | Y    |
-| Subtraction               | N      | N      | Y       | Y    |
-| Dividing to form averages | N      | N      | Y       | Y    |
-| Dividing to form ratios   | N      | N      | N       | Y    |
+| Classification            | Y       | Y       | Y        | Y     |
+| Counting                  | Y       | Y       | Y        | Y     |
+| Proportion/Percentages    | Y       | Y       | Y        | Y     |
+| Rank Ordering             | N       | Y       | Y        | Y     |
+| Addition                  | N       | N       | Y        | Y     |
+| Subtraction               | N       | N       | Y        | Y     |
+| Dividing to form averages | N       | N       | Y        | Y     |
+| Dividing to form ratios   | N       | N       | N        | Y     |
 
 : Acceptable mathematical operations for each level of data. [@warne2020]
 
