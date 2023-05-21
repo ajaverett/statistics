@@ -362,9 +362,7 @@ Under the null hypothesis, the sampling distribution of the mean would be center
 
 To clarify, this **null distribution** is what the distribution of test statistics would look like if the null hypothesis were true. The null distribution is a normal distribution with a mean equal to $\mu_0$ and a standard deviation equal to $s_{\bar{X}}$. Since we are estimating the population standard deviation with the sample standard deviation, we use the t-distribution instead of the normal distribution to estimate the sampling distribution.
 
-*Below is a visualization of the hypothesized null distribution*
 
-![](images/mu0s.png)
 
 **Our Sample**
 
@@ -447,7 +445,6 @@ Under the null hypothesis, the sampling distribution of the mean difference woul
 
 To clarify, this **null distribution** is what the distribution of test statistics would look like if the null hypothesis were true. The null distribution is a normal distribution with a mean equal to $\delta_0$ and a standard deviation equal to $s_{\bar{d}}$. Since we are estimating the population standard deviation with the sample standard deviation, we use the t-distribution instead of the normal distribution to estimate the sampling distribution.
 
-![](images/delta0s.png)
 
 **Our Sample**
 
