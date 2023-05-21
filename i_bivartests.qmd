@@ -215,27 +215,24 @@ $$
 
 The p-value is the probability of obtaining a test statistic as extreme or more extreme than the observed value, assuming the null hypothesis is true. We can mathematically calculate this by using the t-distribution
 
+Let $T \sim \mathcal{t}_{(n-2)}$ be a t-distributed random variable with $n-2$ degrees of freedom and $t$ be the observed t-score. Given this observed t-score, we can then compute the p-value, which is the probability of observing a t-score as extreme as $t$ under the null hypothesis.
+
+
 **Y-intercept ($\beta_0$)**
 
-$$
-\text{p-value} =
-\begin{cases}
-2 \int_{-\infty}^{-|t|} t_{n-2}(\beta_0, s_{b_0}) \, dt &\text{for two-tailed}\\
-\int_{-\infty}^{-|t|} t_{n-2}(\beta_0, s_{b_0}) \, dt &\text{for left-tailed}\\
-\int_{|t|}^{\infty} t_{n-2}(\beta_0, s_{b_0}) \, dt &\text{for right-tailed}
-\end{cases}
-$$
+ -  For a two-tailed t-test (where we're testing for a Y-intercept greater or less than what we are hypothesizing):  When $H_a: \beta_0 \neq 0$, then $p = 2 \times (1 - \text{Pr}(T \leq |t|))$
+
+ -  For a right-tailed t-test (where we're testing for a Y-intercept greater than what we are hypothesizing):  When $H_a: \beta_0 > 0$, then $p = 1 - \text{Pr}(T \leq t)$
+
+ -  For a left-tailed t-test (where we're testing for a Y-intercept less than what we are hypothesizing):  When $H_a: \beta_0 < 0$, then $p = \text{Pr}(T \leq t)$
 
 **Slope ($\beta_1$)**
 
-$$
-\text{p-value} =
-\begin{cases}
-2 \int_{-\infty}^{-|t|} t_{n-2}(\beta_1, s_{b_0}) \, dt &\text{for two-tailed}\\
-\int_{-\infty}^{-|t|} t_{n-2}(\beta_1, s_{b_0}) \, dt &\text{for left-tailed}\\
-\int_{|t|}^{\infty} t_{n-2}(\beta_1, s_{b_0}) \, dt &\text{for right-tailed}
-\end{cases}
-$$
+ -  For a two-tailed t-test (where we're testing for a slope greater or less than what we are hypothesizing):  When $H_a: \beta_1 \neq 0$, then $p = 2 \times (1 - \text{Pr}(T \leq |t|))$
+
+ -  For a right-tailed t-test (where we're testing for a slope greater than what we are hypothesizing):  When $H_a: \beta_1 > 0$, then $p = 1 - \text{Pr}(T \leq t)$
+
+ -  For a left-tailed t-test (where we're testing for a slope less than what we are hypothesizing):  When $H_a: \beta_1 < 0$, then $p = \text{Pr}(T \leq t)$
 
 Where $t$ is the t-statistic from the sample and $t_{n-2}$ is the t-distribution with $n-2$ degrees of freedom with a mean of $H_0:\beta_0$ or $H_0:\beta_1$ and a standard deviation of $s_{b_0}$ or $s_{b_1}$. This can be illustrated below. 
 
@@ -588,7 +585,7 @@ When we say that the confidence interval captures the true parameter values "95%
 
 We can directly visualize the 95 percent confidence interval with the visualization below. The purple line represents the true population parameter. The black line represents the sample estimation. The gray transparent box represents the 95 percent confidence interval.
 
-Note: The visualization below may be a bit misleading since the 95 percent confidence interval does not represent the sample below, but the percentage of all samples below. 
+Note: The visualization below may be a bit misleading since the 95 percent confidence interval does not represent the sample below, but the percentage of all samples. 
 
 ```{r}
 #| message: false
