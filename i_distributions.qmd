@@ -6,7 +6,7 @@ editor_options:
 
 ## Univariate Distributions
 
-## The Normal Distribution
+### The Normal Distribution
 
 A normal distribution, also known as a Gaussian distribution, is a continuous probability distribution that has a bell-shaped curve. The normal distribution is characterized by two parameters: the mean ($\mu$) and the standard deviation ($\sigma$). The following are the key properties of a normal density curve:
 
@@ -15,7 +15,7 @@ A normal distribution, also known as a Gaussian distribution, is a continuous pr
 -   Asymptotic: The tails of the curve extend infinitely in both directions, approaching but never touching the horizontal axis.
 -   Total area: The total area under the curve is equal to 1, representing the probability of all possible outcomes.
 
-## Calculating Z-scores
+### Calculating Z-scores
 
 A z-score is a standardized measure that indicates the relative position of a data point within a distribution. It is calculated using the following formula:
 
@@ -38,6 +38,36 @@ where:
 68-95-99.7 Rule: Approximately 68% of the observations fall within one standard deviation of the mean ($\mu \pm \sigma$), 95% within two standard deviations ($\mu \pm 2\sigma$), and 99.7% within three standard deviations ($\mu \pm 3\sigma$).
 
 ![](images/zdist.png)
+
+
+## The Student's t-Distribution
+
+The Student's t-distribution, often simply referred to as the t-distribution, is a continuous probability distribution that is symmetric and bell-shaped, similar to the normal distribution. The t-distribution, however, has heavier tails. This distribution arises when estimating the mean of a normally distributed population when the sample size is small and the population standard deviation is unknown. 
+
+The t-distribution is characterized by a single parameter: the degrees of freedom (df), which relates to the sample size of the data. As the degrees of freedom increase, the t-distribution approaches the standard normal distribution. The key properties of the t-distribution are:
+
+- Symmetry: The t-distribution is symmetric around zero.
+- Unimodal: Like the normal distribution, the t-distribution has a single peak at zero.
+- Heavier tails: The t-distribution has heavier tails than the normal distribution. This reflects increased uncertainty when sample sizes are small.
+- Total area: The total area under the t-distribution curve is equal to 1, representing the probability of all possible outcomes.
+
+## Calculating t-scores
+
+A t-score is a type of standard score computed by subtracting the population mean from a sample score and then dividing by the sample standard deviation. It is calculated using the following formula:
+
+$t = \frac{(X - \bar{X})}{\left(\frac{s}{\sqrt{n}}\right)}$
+
+where:
+
+-   $t$ is the t-score
+-   $x$ is the individual observation
+-   $\bar{x}$ is the sample mean
+-   $s$ is the sample standard deviation
+-   $n$ is the sample size
+
+t-scores are used when the population mean and standard deviation are unknown, which often is the case with real-world data. t-scores are also used in the calculation of confidence intervals and in hypothesis testing.
+
+
 
 ```{=html}
 <center>

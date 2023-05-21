@@ -132,6 +132,11 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./i_pvalue.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Notes on the p-value</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./i_references.html" class="sidebar-item-text sidebar-link">References</a>
   </div>
 </li>
@@ -144,8 +149,10 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#the-normal-distribution" id="toc-the-normal-distribution" class="nav-link active" data-scroll-target="#the-normal-distribution"><span class="toc-section-number">2.1</span>  The Normal Distribution</a></li>
-  <li><a href="#calculating-z-scores" id="toc-calculating-z-scores" class="nav-link" data-scroll-target="#calculating-z-scores"><span class="toc-section-number">2.2</span>  Calculating Z-scores</a></li>
+  <li><a href="#the-normal-distribution" id="toc-the-normal-distribution" class="nav-link active" data-scroll-target="#the-normal-distribution"><span class="toc-section-number">2.0.1</span>  The Normal Distribution</a></li>
+  <li><a href="#calculating-z-scores" id="toc-calculating-z-scores" class="nav-link" data-scroll-target="#calculating-z-scores"><span class="toc-section-number">2.0.2</span>  Calculating Z-scores</a></li>
+  <li><a href="#the-students-t-distribution" id="toc-the-students-t-distribution" class="nav-link" data-scroll-target="#the-students-t-distribution"><span class="toc-section-number">2.1</span>  The Student’s t-Distribution</a></li>
+  <li><a href="#calculating-t-scores" id="toc-calculating-t-scores" class="nav-link" data-scroll-target="#calculating-t-scores"><span class="toc-section-number">2.2</span>  Calculating t-scores</a></li>
   </ul>
 </nav>
     </div>
@@ -169,8 +176,8 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<section id="the-normal-distribution" class="level2" data-number="2.1">
-<h2 data-number="2.1" class="anchored" data-anchor-id="the-normal-distribution"><span class="header-section-number">2.1</span> The Normal Distribution</h2>
+<section id="the-normal-distribution" class="level3" data-number="2.0.1">
+<h3 data-number="2.0.1" class="anchored" data-anchor-id="the-normal-distribution"><span class="header-section-number">2.0.1</span> The Normal Distribution</h3>
 <p>A normal distribution, also known as a Gaussian distribution, is a continuous probability distribution that has a bell-shaped curve. The normal distribution is characterized by two parameters: the mean (<span class="math inline">\(\mu\)</span>) and the standard deviation (<span class="math inline">\(\sigma\)</span>). The following are the key properties of a normal density curve:</p>
 <ul>
 <li>Symmetry: The curve is symmetric around the mean.</li>
@@ -179,8 +186,8 @@ ul.task-list li input[type="checkbox"] {
 <li>Total area: The total area under the curve is equal to 1, representing the probability of all possible outcomes.</li>
 </ul>
 </section>
-<section id="calculating-z-scores" class="level2" data-number="2.2">
-<h2 data-number="2.2" class="anchored" data-anchor-id="calculating-z-scores"><span class="header-section-number">2.2</span> Calculating Z-scores</h2>
+<section id="calculating-z-scores" class="level3" data-number="2.0.2">
+<h3 data-number="2.0.2" class="anchored" data-anchor-id="calculating-z-scores"><span class="header-section-number">2.0.2</span> Calculating Z-scores</h3>
 <p>A z-score is a standardized measure that indicates the relative position of a data point within a distribution. It is calculated using the following formula:</p>
 <p><span class="math inline">\(z = \frac{(x - \mu)}{\sigma}\)</span></p>
 <p>where:</p>
@@ -197,6 +204,31 @@ ul.task-list li input[type="checkbox"] {
 </center>
 <p>68-95-99.7 Rule: Approximately 68% of the observations fall within one standard deviation of the mean (<span class="math inline">\(\mu \pm \sigma\)</span>), 95% within two standard deviations (<span class="math inline">\(\mu \pm 2\sigma\)</span>), and 99.7% within three standard deviations (<span class="math inline">\(\mu \pm 3\sigma\)</span>).</p>
 <p><img src="images/zdist.png" class="img-fluid"></p>
+</section>
+<section id="the-students-t-distribution" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="the-students-t-distribution"><span class="header-section-number">2.1</span> The Student’s t-Distribution</h2>
+<p>The Student’s t-distribution, often simply referred to as the t-distribution, is a continuous probability distribution that is symmetric and bell-shaped, similar to the normal distribution. The t-distribution, however, has heavier tails. This distribution arises when estimating the mean of a normally distributed population when the sample size is small and the population standard deviation is unknown.</p>
+<p>The t-distribution is characterized by a single parameter: the degrees of freedom (df), which relates to the sample size of the data. As the degrees of freedom increase, the t-distribution approaches the standard normal distribution. The key properties of the t-distribution are:</p>
+<ul>
+<li>Symmetry: The t-distribution is symmetric around zero.</li>
+<li>Unimodal: Like the normal distribution, the t-distribution has a single peak at zero.</li>
+<li>Heavier tails: The t-distribution has heavier tails than the normal distribution. This reflects increased uncertainty when sample sizes are small.</li>
+<li>Total area: The total area under the t-distribution curve is equal to 1, representing the probability of all possible outcomes.</li>
+</ul>
+</section>
+<section id="calculating-t-scores" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="calculating-t-scores"><span class="header-section-number">2.2</span> Calculating t-scores</h2>
+<p>A t-score is a type of standard score computed by subtracting the population mean from a sample score and then dividing by the sample standard deviation. It is calculated using the following formula:</p>
+<p><span class="math inline">\(t = \frac{(X - \bar{X})}{\left(\frac{s}{\sqrt{n}}\right)}\)</span></p>
+<p>where:</p>
+<ul>
+<li><span class="math inline">\(t\)</span> is the t-score</li>
+<li><span class="math inline">\(x\)</span> is the individual observation</li>
+<li><span class="math inline">\(\bar{x}\)</span> is the sample mean</li>
+<li><span class="math inline">\(s\)</span> is the sample standard deviation</li>
+<li><span class="math inline">\(n\)</span> is the sample size</li>
+</ul>
+<p>t-scores are used when the population mean and standard deviation are unknown, which often is the case with real-world data. t-scores are also used in the calculation of confidence intervals and in hypothesis testing.</p>
 <center>
 <div width="90%">
 <iframe src="https://byuimath.com/apps/normprobwitht.html?width=600&amp;z=1&amp;height=400&amp;left=1&amp;mid=0&amp;right=1&amp;area=a&amp;static=0&amp;title=1&amp;border=0" frameborder="0" width="650" height="450" data-external="1"></iframe>
