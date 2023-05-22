@@ -34,9 +34,33 @@ The alternative hypothesis (denoted as $H_a$) is a statement that contradicts th
 
 It is crucial to note that failing to reject the null hypothesis does not prove it is true; rather, it indicates that there is not enough evidence to conclude that the alternative hypothesis is true. Additionally, the p-value is subject to various limitations and potential misinterpretations, so it is essential to consider effect sizes, confidence intervals, and other aspects of the data when making conclusions from hypothesis testing. 
 
+## The Central Limit Theorem
+
+The central limit theorem is the most fundamental theory in modern statistics. Without this theorem, parametric tests based on the assumption that sample data come from a population with fixed parameters determining its probability distribution would not exist. The central limit theorem states that the sampling distribution of the mean of any independent, random variable will be approximately normally distributed if the sample size is large enough. This is true regardless of the shape of the population distribution. The theorem also states that the mean of the sampling distribution will be equal to the population mean and the standard deviation of the sampling distribution will be equal to the population standard deviation divided by the square root of the sample size.
+
+**Visualizing the Central Limit Theorem**
+
+Below is an applet that allows you to draw a parent population distribution and see how parent population, sample size, and number of samples drawn will change the shape, spread, and center of the sampling distribution.
+
+
+```{=html}
+<center>
+<div width="80%">
+<iframe src="https://ajaverett.github.io/data/index.html?width=800&z=1&height=500&left=1&mid=0&right=1&area=a&static=0&title=1&border=0" frameborder="0" width="850" height="750" data-external="1""></iframe>
+</div>
+</center>
+```
+
+Using the central limit theorem, a variety of parametric tests have been developed under assumptions about the parameters that determine the population probability distribution. Compared to non-parametric tests, which do not require any assumptions about the population probability distribution, parametric tests produce more accurate and precise estimates with higher statistical powers. ([Kwak and Kim, 2017](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5370305/))
+
+
 ## Parametric Tests for Comparing Means
 
 Parametric tests are statistical procedures that make specific assumptions about the parameters or the distribution of the populations from which the data is drawn. They are powerful and can provide more reliable results when the assumptions are met. The most common type of parametric test involves the comparison of means.
+
+
+
+
 
 ### One-Sample Test
 
@@ -59,6 +83,7 @@ A **paired samples test**, also known as a dependent samples test or paired test
 An **independent samples test**, also known as two sample test, is used when you have two independent samples and aim to compare their means. The samples are independent in the sense that the selection of individuals in one group does not influence the selection of individuals in the other group. This test investigates if the means of these two independent samples significantly differ by comparing the **difference of the means**.
 
 -   **Example Usage**: A researcher wants to compare the average heights of two different species of trees to determine if one species tends to be taller than the other.
+
 
 ## z-tests
 

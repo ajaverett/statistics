@@ -15,6 +15,7 @@ book:
     - i_bivariate.qmd
     - i_bivartests.qmd
     - i_pvalue.qmd
+    - i_examples.qmd
     - i_references.qmd
 
 
