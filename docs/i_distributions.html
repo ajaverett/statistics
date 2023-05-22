@@ -150,7 +150,7 @@ ul.task-list li input[type="checkbox"] {
    
   <ul>
   <li><a href="#the-normal-distribution" id="toc-the-normal-distribution" class="nav-link active" data-scroll-target="#the-normal-distribution"><span class="toc-section-number">2.0.1</span>  The Normal Distribution</a></li>
-  <li><a href="#calculating-z-scores" id="toc-calculating-z-scores" class="nav-link" data-scroll-target="#calculating-z-scores"><span class="toc-section-number">2.0.2</span>  Calculating Z-scores</a></li>
+  <li><a href="#a-tale-of-two-z-scores" id="toc-a-tale-of-two-z-scores" class="nav-link" data-scroll-target="#a-tale-of-two-z-scores"><span class="toc-section-number">2.0.2</span>  A tale of two z-scores</a></li>
   <li><a href="#the-students-t-distribution" id="toc-the-students-t-distribution" class="nav-link" data-scroll-target="#the-students-t-distribution"><span class="toc-section-number">2.1</span>  The Student’s t-Distribution</a></li>
   <li><a href="#calculating-t-scores" id="toc-calculating-t-scores" class="nav-link" data-scroll-target="#calculating-t-scores"><span class="toc-section-number">2.2</span>  Calculating t-scores</a></li>
   </ul>
@@ -186,16 +186,34 @@ ul.task-list li input[type="checkbox"] {
 <li>Total area: The total area under the curve is equal to 1, representing the probability of all possible outcomes.</li>
 </ul>
 </section>
-<section id="calculating-z-scores" class="level3" data-number="2.0.2">
-<h3 data-number="2.0.2" class="anchored" data-anchor-id="calculating-z-scores"><span class="header-section-number">2.0.2</span> Calculating Z-scores</h3>
-<p>A z-score is a standardized measure that indicates the relative position of a data point within a distribution. It is calculated using the following formula:</p>
-<p><span class="math inline">\(z = \frac{(x - \mu)}{\sigma}\)</span></p>
+<section id="a-tale-of-two-z-scores" class="level3" data-number="2.0.2">
+<h3 data-number="2.0.2" class="anchored" data-anchor-id="a-tale-of-two-z-scores"><span class="header-section-number">2.0.2</span> A tale of two z-scores</h3>
+<p>There are two z-score formulas used for very different purposes. The first is used to compare a single data point to a distribution for which you know the mean and standard deviation. The second is used to compare a sample mean to a a distribution of sample means.</p>
+<p><strong>Comparing a single data point to a population</strong></p>
+<p>In this case, imagine you know the population mean and standard deviation. You want to know how many standard deviations a single data point is from the mean. This is calculated using the following formula:</p>
+<p><span class="math inline">\(z = \frac{(X_i - \mu)}{\sigma}\)</span></p>
 <p>where:</p>
 <ul>
 <li><span class="math inline">\(z\)</span> is the z-score</li>
-<li><span class="math inline">\(x\)</span> is the individual observation</li>
+<li><span class="math inline">\(X_i\)</span> is the individual observation</li>
 <li><span class="math inline">\(\mu\)</span> is the mean of the distribution</li>
 <li><span class="math inline">\(\sigma\)</span> is the standard deviation of the distribution</li>
+</ul>
+<p><strong>Comparing a sample mean to a distribution of sample means</strong></p>
+<p>In this case, you are preforming a hypothesis test. You want to know how many standard deviations a sample mean is from the hypothesized population mean. This is calculated using the following formula:</p>
+<p><span class="math display">\[
+z = \frac{(\bar{X} - \mu)}{\left(\frac{\sigma}{\sqrt{n}}\right)}
+\]</span></p>
+<p>or equivalently:</p>
+<p><span class="math display">\[
+z = \frac{(\bar{X} - \mu)}{\sigma_{\bar{X}}}
+\]</span></p>
+<p>where:</p>
+<ul>
+<li><span class="math inline">\(z\)</span> is the z-score</li>
+<li><span class="math inline">\(\bar{X}\)</span> is the sample mean (or other statistic)</li>
+<li><span class="math inline">\(\mu\)</span> is the sampling distribution mean (or other statistic)</li>
+<li><span class="math inline">\(\sigma_{\bar{X}}\)</span> is the standard deviation of the distribution of sample means (or other statistic)</li>
 </ul>
 <center>
 <div width="90%">
@@ -218,14 +236,20 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="calculating-t-scores" class="level2" data-number="2.2">
 <h2 data-number="2.2" class="anchored" data-anchor-id="calculating-t-scores"><span class="header-section-number">2.2</span> Calculating t-scores</h2>
-<p>A t-score is a type of standard score computed by subtracting the population mean from a sample score and then dividing by the sample standard deviation. It is calculated using the following formula:</p>
-<p><span class="math inline">\(t = \frac{(X - \bar{X})}{\left(\frac{s}{\sqrt{n}}\right)}\)</span></p>
+<p>Unlike the two z-score formulas, people generally only use a single t-score formula. The t-score is used to compare a sample mean (or another statistic) to a hypothesized distribution of means (or another statistic) when the population standard deviation is unknown. This is calculated using the following formula:</p>
+<p><span class="math display">\[
+t = \frac{(\bar{X} - \mu)}{\left(\frac{s}{\sqrt{n}}\right)}
+\]</span></p>
+<p>or equivalently:</p>
+<p><span class="math display">\[
+t = \frac{(\bar{X} - \mu)}{s_{\bar{X}}}
+\]</span></p>
 <p>where:</p>
 <ul>
 <li><span class="math inline">\(t\)</span> is the t-score</li>
-<li><span class="math inline">\(x\)</span> is the individual observation</li>
-<li><span class="math inline">\(\bar{x}\)</span> is the sample mean</li>
-<li><span class="math inline">\(s\)</span> is the sample standard deviation</li>
+<li><span class="math inline">\(\bar{X}\)</span> is sample mean (or other statistic)</li>
+<li><span class="math inline">\(\mu\)</span> is the hypothesized population mean (or other statistic)</li>
+<li><span class="math inline">\(s_{\bar{X}}\)</span> is the standard deviation of the distribution of sample means (or other statistic)</li>
 <li><span class="math inline">\(n\)</span> is the sample size</li>
 </ul>
 <p>t-scores are used when the population mean and standard deviation are unknown, which often is the case with real-world data. t-scores are also used in the calculation of confidence intervals and in hypothesis testing.</p>
